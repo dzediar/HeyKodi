@@ -22,6 +22,14 @@ namespace HeyKodi.Views
 
         public static MainView Instance { get { return instance ?? (instance = new MainView()); } }
 
+        private void ActivateMainWindow()
+        {
+            if (Application.Current?.MainWindow != null && Application.Current.MainWindow.IsVisible)
+            {
+                Application.Current.MainWindow.Activate();
+            }
+        }
+
         public MainView()
         {
             InitializeComponent();
@@ -34,18 +42,32 @@ namespace HeyKodi.Views
             RegisterMessagesResponses();
 
             this.Loaded += MainView_Loaded;
+            Application.Current.MainWindow.Closing += MainWindow_Closing;
+            Application.Current.MainWindow.Closed += MainWindow_Closed;
         }
 
         private void MainView_Loaded(object sender, RoutedEventArgs e)
         {
             this.MainViewModel = MainViewModel.Instance;
 
-            Application.Current.MainWindow.Closed += MainWindow_Closed;
+            if (MainViewModel.SpeechSynthesizer != null)
+            {
+                MainViewModel.SpeechSynthesizer.SpeakCompleted += SpeechSynthesizer_SpeakCompleted;
+            }
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             MainViewModel.Cleanup();
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Question, Application.Current.MainWindow.Title,
+                "Etes-vous certain de vouloir quitter Hey Kodi ?", zSpeechBalloonButtonsType.YesNo) == zSpeechBalloonDialogResult.No)
+            {
+                e.Cancel = true;
+            }
         }
 
         private bool messagesResponsesRegistred = false;
@@ -140,10 +162,19 @@ namespace HeyKodi.Views
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        Application.Current.MainWindow.Activate();
+                        ActivateMainWindow();
 
                         MainViewModel.KodiSpeechRecognizer.RecognizeAsyncCancel();
-                        player.Source = new Uri(msg.SoundSource);
+
+                        if (MainViewModel.HeyKodiConfig.UseSpeechSynthesizer &&
+                            !string.IsNullOrWhiteSpace(msg.Speech) && MainViewModel.SpeechSynthesizer != null)
+                        {
+                            MainViewModel.SpeechSynthesizer.SpeakAsync(msg.Speech);
+                        }
+                        else
+                        {
+                            player.Source = new Uri(msg.SoundSource);
+                        }
                     });
                 }
             );
@@ -186,7 +217,7 @@ namespace HeyKodi.Views
                         if (Application.Current?.MainWindow != null)
                         {
                             Application.Current.MainWindow.WindowState = WindowState.Normal;
-                            Application.Current.MainWindow.Activate();
+                            ActivateMainWindow();
                         }
                     });
                 }
@@ -194,6 +225,11 @@ namespace HeyKodi.Views
         }
 
         private void player_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            MainViewModel.KodiSpeechRecognizer.RecognizeAsync();
+        }
+
+        private void SpeechSynthesizer_SpeakCompleted(object sender, System.Speech.Synthesis.SpeakCompletedEventArgs e)
         {
             MainViewModel.KodiSpeechRecognizer.RecognizeAsync();
         }

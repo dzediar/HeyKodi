@@ -74,10 +74,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="zComp.Core">
-      <HintPath>..\..\..\DevOpsRepo\zComp\Trunc\zComp.Wpf\bin\Debug\zComp.Core.dll</HintPath>
+      <HintPath>..\..\DevOpsRepo\zComp\Trunc\zComp.Wpf\bin\Debug\zComp.Core.dll</HintPath>
     </Reference>
     <Reference Include="zComp.Wpf">
-      <HintPath>..\..\..\DevOpsRepo\zComp\Trunc\zComp.Wpf\bin\Debug\zComp.Wpf.dll</HintPath>
+      <HintPath>..\..\DevOpsRepo\zComp\Trunc\zComp.Wpf\bin\Debug\zComp.Wpf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +140,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="HeyKodi.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

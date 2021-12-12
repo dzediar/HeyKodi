@@ -24,11 +24,13 @@ x Créer des classes commandes kodi avec un execute()
 x Gérer toutes les commandes listées
 x Mettre les sons en ressources
 x Créer un installer complet
-Gérer la synthèse vocale pour les commandes à paramètres
+x Gérer la synthèse vocale pour les commandes à paramètres
 Tester toutes les commandes sur le mediacenter en utilisant l'installer
-Mettre les sources sous github
+x Mettre les sources sous github
+Créer une doc succinte dans le wiki
+x Faire en sorte que l'appli se lance au démarrage de windows
+Créer une première release
 
-Tester sans us, sans reconnaissance vocale
 
 
 Commande avec comme paramètre un pourcentage (volume, ...)

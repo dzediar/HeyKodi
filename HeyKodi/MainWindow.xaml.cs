@@ -26,17 +26,6 @@ namespace HeyKodi
         public MainWindow()
         {
             InitializeComponent();
-
-            this.Closing += MainWindow_Closing;
-        }
-
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Question, this.Title, 
-                "Etes-vous certain de vouloir quitter Hey Kodi ?", zSpeechBalloonButtonsType.YesNo) == zSpeechBalloonDialogResult.No)
-            {
-                e.Cancel = true;
-            }
         }
 
         private Point thumbOrigin;

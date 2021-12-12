@@ -1,9 +1,11 @@
 ﻿using KodiRPC.RPC.Specifications;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -129,7 +131,7 @@ namespace HeyKodi.Model
             }
         }
 
-        private double volume = 0.4;
+        private double volume = 0.2;
 
         public double Volume
         {
@@ -141,6 +143,21 @@ namespace HeyKodi.Model
             {
                 volume = value;
                 NotifyPropertyChanged(nameof(Volume));
+            }
+        }
+
+        private bool runAtWindowsStart = true;
+
+        public bool RunAtWindowsStart
+        {
+            get
+            {
+                return runAtWindowsStart;
+            }
+            set
+            {
+                runAtWindowsStart = value;
+                NotifyPropertyChanged(nameof(RunAtWindowsStart));
             }
         }
 
@@ -158,6 +175,21 @@ namespace HeyKodi.Model
                 NotifyPropertyChanged(nameof(MinimizeWhenPending));
             }
         }
+
+        private bool useSpeechSynthesizer = true;
+
+        public bool UseSpeechSynthesizer
+        {
+            get
+            {
+                return useSpeechSynthesizer;
+            }
+            set
+            {
+                useSpeechSynthesizer = value;
+                NotifyPropertyChanged(nameof(UseSpeechSynthesizer));
+            }
+        }        
 
         private List<HeyKodiCommandConfig> commands;
 
@@ -297,6 +329,33 @@ namespace HeyKodi.Model
                 config.Init();
             }
 
+            try
+            {
+                string registryAppName = "HeyKodi";
+
+                using (var rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                {
+                    if (config.RunAtWindowsStart)
+                    {
+                        if (rkApp.GetValue(registryAppName) == null)
+                        {
+                            rkApp.SetValue(registryAppName, Assembly.GetEntryAssembly().Location);
+                        }
+                    }
+                    else
+                    {
+                        if (rkApp.GetValue(registryAppName) != null)
+                        {
+                            rkApp.DeleteValue(registryAppName, false);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                config.RunAtWindowsStart = false;
+            }
+
             return config;
         }
 
@@ -309,8 +368,9 @@ namespace HeyKodi.Model
             config.NeedHeyKodiWakeup = true;
             config.KodiWakeupSpeech = "codi";
             config.DebugMode = false;
-            config.Volume = 0.4;
+            config.Volume = 0.2;
             config.MinimizeWhenPending = false;
+            config.UseSpeechSynthesizer = true;
             config.Consolidate();
 
             return config;
@@ -396,6 +456,7 @@ namespace HeyKodi.Model
                     DefaultSpeech = "recherche",
                     KodiApiMethod = KodiMethods.ExecuteAddon,
                     ParameterRequired = true,
+                    ParameterQuestion = "Que dois-je rechercher ?"
                 }
             },
             {
@@ -549,6 +610,8 @@ namespace HeyKodi.Model
             public string KodiApiMethod { get; set; }
 
             public bool ParameterRequired { get; set; }
+
+            public string ParameterQuestion { get; set; }
 
             public override string ToString()
             {
