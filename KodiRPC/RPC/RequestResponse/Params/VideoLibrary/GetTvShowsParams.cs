@@ -11,6 +11,7 @@
  */
 
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace KodiRPC.RPC.RequestResponse.Params.VideoLibrary
 {
@@ -52,22 +53,20 @@ namespace KodiRPC.RPC.RequestResponse.Params.VideoLibrary
     {
     }
 
-    public class GetPlayersParams : KodiProperties
+    public class GetActivePlayersParams : KodiProperties
     {
-        [JsonProperty("media", Required = Required.AllowNull)]
-        public string Media { get; set; }
     }
 
     public class StopPlayerParams : KodiProperties
     {
         [JsonProperty("playerid", Required = Required.Always)]
-        public string PlayerId { get; set; }
+        public int PlayerId { get; set; }
     }
 
-    public class TogglePlayPausePlayerParams : KodiProperties
+    public class TogglePlayPauseParams : KodiProperties
     {
-        [JsonProperty("Play", Required = Required.Always)]
-        public string Play { get; set; } = "toggle";
+        [JsonProperty("playerid", Required = Required.Always)]
+        public int PlayerId { get; set; }
     }
 
     public class SetMuteParams : KodiProperties

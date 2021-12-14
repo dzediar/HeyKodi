@@ -79,9 +79,9 @@ namespace KodiRPC.Services
             return _rpcConnector.MakeRequest<string>(KodiMethods.ExecuteAddon, parameters, requestId);
         }
 
-        public JsonRpcResponse<GetPlayersResponse> GetPlayers(GetPlayersParams parameters, string requestId = KodiMethods.GetPlayers)
+        public JsonRpcResponse<GetActivePlayersResponse> GetActivePlayers(GetActivePlayersParams parameters, string requestId = KodiMethods.GetActivePlayers)
         {
-            return _rpcConnector.MakeRequest<GetPlayersResponse>(KodiMethods.GetPlayers, parameters, requestId);
+            return _rpcConnector.MakeRequest<GetActivePlayersResponse>(KodiMethods.GetActivePlayers, parameters, requestId);
         }
 
         public JsonRpcResponse<string> StopPlayer(StopPlayerParams parameters, string requestId = KodiMethods.StopPlayer)
@@ -89,9 +89,9 @@ namespace KodiRPC.Services
             return _rpcConnector.MakeRequest<string>(KodiMethods.StopPlayer, parameters, requestId);
         }
 
-        public JsonRpcResponse<string> TogglePlayerPlayPause(TogglePlayPausePlayerParams parameters, string requestId = KodiMethods.PlayPause)
+        public JsonRpcResponse<PlayerSpeed> TogglePlayerPlayPause(TogglePlayPauseParams parameters, string requestId = KodiMethods.PlayPause)
         {
-            return _rpcConnector.MakeRequest<string>(KodiMethods.PlayPause, parameters, requestId);
+            return _rpcConnector.MakeRequest<PlayerSpeed>(KodiMethods.PlayPause, parameters, requestId);
         }
 
         public JsonRpcResponse<string> SetMute(SetMuteParams parameters, string requestId = KodiMethods.SetMute)

@@ -150,7 +150,8 @@
             </Grid.RowDefinitions>
 
             <MediaElement x:Name="player" Visibility="Visible" LoadedBehavior="Play" UnloadedBehavior="Close" IsMuted="False"
-                    MediaEnded="player_MediaEnded" IsHitTestVisible="False" Volume="{Binding HeyKodiConfig.Volume, Mode=OneWay}"/>
+                    MediaEnded="player_MediaEnded" IsHitTestVisible="False" />
+			<!--Volume="{Binding HeyKodiConfig.Volume, Mode=OneWay}"-->
 
             <zw:zGrid Background="{StaticResource {x:Static zw:zCompColors.FocusedControlBackgroundBrushKey}}" Margin="0">
                 <zw:zStackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">

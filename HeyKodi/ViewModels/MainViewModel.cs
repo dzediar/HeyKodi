@@ -40,6 +40,10 @@ namespace HeyKodi.ViewModels
 
         private MainViewModel()
         {
+        }
+
+        public void Init()
+        {
             try
             {
                 ShowConfigurationCommand = new RelayCommand(() => ShowConfiguration());
@@ -59,10 +63,17 @@ namespace HeyKodi.ViewModels
 
                 SpeechSynthesizer = new SpeechSynthesizer();
 
-                if (SpeechSynthesizer.GetInstalledVoices().Count == 0)
+                var installedVoices = SpeechSynthesizer.GetInstalledVoices();
+
+                if (installedVoices.Count == 0)
                 {
                     SpeechSynthesizer.Dispose();
                     SpeechSynthesizer = null;
+                }
+                else
+                {
+                    var voiceToUse = installedVoices.FirstOrDefault(v => v.VoiceInfo.Culture.Name == System.Threading.Thread.CurrentThread.CurrentCulture.Name) ?? installedVoices[0];
+                    SpeechSynthesizer.SelectVoice(voiceToUse.VoiceInfo.Name);
                 }
             }
             catch (Exception ex)
@@ -70,6 +81,7 @@ namespace HeyKodi.ViewModels
                 throw new CriticalApplicationException("Une erreur critique s'est produite lors de l'initialisation de Hey Kodi, l'application va se fermer.", ex);
             }
         }
+
 
         private void KodiSpeechRecognizer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -110,16 +122,19 @@ namespace HeyKodi.ViewModels
             else if (command == HeyKodiCommandEnum.CancelHeyKodi)
             {
                 KodiSpeechRecognizer.Cancel(false);
-                result = false;
+                result = true;
             }
             else
             {
-                //KodiSpeechRecognizer.RecognizeAsyncCancel();
+                KodiService.Host = HeyKodiConfig.KodiApiHost;
+                KodiService.Port = HeyKodiConfig.KodiApiPort.ToString();
+                KodiService.Username = HeyKodiConfig.KodiApiUserName;
+                KodiService.Password = HeyKodiConfig.KodiApiPassword;
 
                 try
                 {
 
-                    List<Player> players = null;
+                    List<ActivePlayer> players = null;
 
                     if (command == HeyKodiCommandEnum.Search)
                     {
@@ -128,20 +143,20 @@ namespace HeyKodi.ViewModels
                             return false;
                         }
                     }
+                    else if (command == HeyKodiCommandEnum.Search)
+                    {
+                        if (!RunKodiCommand(HeyKodiCommandEnum.Back))
+                        {
+                            return false;
+                        }
+                    }
                     else if (command == HeyKodiCommandEnum.Stop ||
                         command == HeyKodiCommandEnum.Play ||
                         command == HeyKodiCommandEnum.Pause)
                     {
-                        players = KodiService.GetPlayers(new GetPlayersParams()
-                        {
-                            Media = "all"
-                        }).Result.Items;
+                        players = KodiService.GetActivePlayers(new GetActivePlayersParams()).Result
+                            .Where(p => p.PlayerType == "internal").ToList();
                     }
-
-                    KodiService.Host = HeyKodiConfig.KodiApiHost;
-                    KodiService.Port = HeyKodiConfig.KodiApiPort.ToString();
-                    KodiService.Username = HeyKodiConfig.KodiApiUserName;
-                    KodiService.Password = HeyKodiConfig.KodiApiPassword;
 
                     //var kodiApiMethod = HeyKodiConfigExtensions.CommandRepository[command].KodiApiMethod;
 
@@ -169,7 +184,7 @@ namespace HeyKodi.ViewModels
                             {
                                 foreach (var p in players)
                                 {
-                                    KodiService.StopPlayer(new StopPlayerParams() { PlayerId = p.Name });
+                                    KodiService.StopPlayer(new StopPlayerParams() { PlayerId = p.PlayerId });
                                 }
                             }
                             break;
@@ -178,7 +193,11 @@ namespace HeyKodi.ViewModels
                             {
                                 foreach (var p in players)
                                 {
-                                    KodiService.TogglePlayerPlayPause(new TogglePlayPausePlayerParams() { Play = true.ToString() });
+                                    var speed = KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId }).Result.Speed;
+                                    if (speed == 0)
+                                    {
+                                        KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId });
+                                    }
                                 }
                             }
                             break;
@@ -187,7 +206,11 @@ namespace HeyKodi.ViewModels
                             {
                                 foreach (var p in players)
                                 {
-                                    KodiService.TogglePlayerPlayPause(new TogglePlayPausePlayerParams() { Play = false.ToString() });
+                                    var speed = KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId }).Result.Speed;
+                                    if (speed > 0)
+                                    {
+                                        KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId });
+                                    }
                                 }
                             }
                             break;
@@ -268,8 +291,10 @@ namespace HeyKodi.ViewModels
             return soundsDir;
         }
 
-        private void ShowError(string message, Exception exception)
+        public void ShowError(string message, Exception exception)
         {
+            KodiSpeechRecognizer.Cancel(false);
+
             var msg = exception == null ? new ShowMessageMsg(this, null, message, ShowMessageType.Error) :
                 new ShowMessageMsg(this, null, exception);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(msg);
@@ -421,6 +446,8 @@ namespace HeyKodi.ViewModels
                 minimizeCommand = value;
                 RaisePropertyChanged(nameof(MinimizeCommand));
             }
-        }        
+        }
+
+        public string Title { get; } = "Hey Kodi !";
     }
 }

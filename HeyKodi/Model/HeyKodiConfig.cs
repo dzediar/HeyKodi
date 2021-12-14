@@ -443,7 +443,7 @@ namespace HeyKodi.Model
                 new CommandInfos()
                 {
                     Description = "Annuler l'activation de Hey Kodi",
-                    DefaultSpeech = "non rien",
+                    DefaultSpeech = "annuler",
                     KodiApiMethod = null,
                     ParameterRequired = false,
                 }
@@ -524,7 +524,7 @@ namespace HeyKodi.Model
                 new CommandInfos()
                 {
                     Description = "Mute",
-                    DefaultSpeech = "mute",
+                    DefaultSpeech = "mioute",
                     KodiApiMethod = KodiMethods.SetMute,
                     ParameterRequired = false,
                 }
@@ -594,7 +594,7 @@ namespace HeyKodi.Model
                 new CommandInfos()
                 {
                     Description = "Ejecter le disque",
-                    DefaultSpeech = "ejecter",
+                    DefaultSpeech = "eject",
                     KodiApiMethod = KodiMethods.EjectOpticalDrive,
                     ParameterRequired = false,
                 }

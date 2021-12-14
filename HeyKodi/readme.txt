@@ -25,21 +25,23 @@ x Gérer toutes les commandes listées
 x Mettre les sons en ressources
 x Créer un installer complet
 x Gérer la synthèse vocale pour les commandes à paramètres
-Tester toutes les commandes sur le mediacenter en utilisant l'installer
 x Mettre les sources sous github
-Créer une doc succinte dans le wiki
+x Créer une doc succinte dans le wiki
 x Faire en sorte que l'appli se lance au démarrage de windows
+x Tester toutes les commandes sur le mediacenter en utilisant l'installer
+Essayer d'ajouter la grammaire des titres de film car la reconnaissance vocale est nulle
 Créer une première release
 
 
-
+Choix des langues de reconnaissance et de synthèse vocale
 Commande avec comme paramètre un pourcentage (volume, ...)
 Localiser l'appli
 Crypter le mdp kodi
 Afficher l'exception uniquement lorsqu' le mode debug est activé, donner un maxwidth au content du speechballon, en permettant le wrapping du texte, trouver un rouge correct pour l'exceptionviewer
 Tester tester tester... (sur le médiacenter)
 Créer un installer
-
+Mettre une déco sur la fenêtre principale de launchmeup pour éviter le scaling windows
+La réduction et l'activation ne se font plus en mode commande directe
 
 Commandes : 
 	éteindre

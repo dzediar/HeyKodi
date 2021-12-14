@@ -6,6 +6,7 @@ using KodiRPC.RPC.Specifications;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using zComp.Core;
 using zComp.Core.Helpers;
 using zComp.Wpf;
@@ -50,6 +51,8 @@ namespace HeyKodi.Views
         {
             this.MainViewModel = MainViewModel.Instance;
 
+            this.MainViewModel.Init();
+
             if (MainViewModel.SpeechSynthesizer != null)
             {
                 MainViewModel.SpeechSynthesizer.SpeakCompleted += SpeechSynthesizer_SpeakCompleted;
@@ -63,7 +66,7 @@ namespace HeyKodi.Views
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Question, Application.Current.MainWindow.Title,
+            if (zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Question, MainViewModel.Title,
                 "Etes-vous certain de vouloir quitter Hey Kodi ?", zSpeechBalloonButtonsType.YesNo) == zSpeechBalloonDialogResult.No)
             {
                 e.Cancel = true;
@@ -87,9 +90,9 @@ namespace HeyKodi.Views
                 Application.Current,
                 msg =>
                 {
-                    Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
-                        object title = msg.Title ?? Application.Current.MainWindow.Title;
+                        object title = msg.Title ?? MainViewModel.Title;
 
                         var messageType = zSpeechBalloonIcon.Information;
                         //object message = msg.Exception == null ? msg.Message :
@@ -160,7 +163,7 @@ namespace HeyKodi.Views
                 Application.Current,
                 msg =>
                 {
-                    Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
                         ActivateMainWindow();
 
@@ -169,10 +172,12 @@ namespace HeyKodi.Views
                         if (MainViewModel.HeyKodiConfig.UseSpeechSynthesizer &&
                             !string.IsNullOrWhiteSpace(msg.Speech) && MainViewModel.SpeechSynthesizer != null)
                         {
+                            MainViewModel.SpeechSynthesizer.Volume = (int)(MainViewModel.HeyKodiConfig.Volume * 100.0);
                             MainViewModel.SpeechSynthesizer.SpeakAsync(msg.Speech);
                         }
                         else
                         {
+                            player.Volume = MainViewModel.HeyKodiConfig.Volume * 0.20;
                             player.Source = new Uri(msg.SoundSource);
                         }
                     });
@@ -185,7 +190,7 @@ namespace HeyKodi.Views
                 Application.Current,
                 msg =>
                 {
-                    Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
                         zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Information, "Configuration de Hey Kodi", ConfigView.Instance, zSpeechBalloonButtonsType.Ok);
                     });
@@ -197,9 +202,9 @@ namespace HeyKodi.Views
                 Application.Current,
                 msg =>
                 {
-                    Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
-                        if (Application.Current?.MainWindow != null)
+                        if (Application.Current?.MainWindow != null && Application.Current.MainWindow.IsVisible)
                         {
                             Application.Current.MainWindow.WindowState = WindowState.Minimized;
                         }
@@ -212,9 +217,9 @@ namespace HeyKodi.Views
                 Application.Current,
                 msg =>
                 {
-                    Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
-                        if (Application.Current?.MainWindow != null)
+                        if (Application.Current?.MainWindow != null && Application.Current.MainWindow.IsVisible)
                         {
                             Application.Current.MainWindow.WindowState = WindowState.Normal;
                             ActivateMainWindow();

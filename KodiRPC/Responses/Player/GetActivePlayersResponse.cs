@@ -17,24 +17,27 @@ using Newtonsoft.Json;
 
 namespace KodiRPC.Responses.VideoLibrary
 {
-    public class GetPlayersResponse
+    public class GetActivePlayersResponse : List<ActivePlayer>
     {
-        [JsonProperty(PropertyName = "items")]
-        public List<Player> Items { get; set; }
+        //[JsonProperty(PropertyName = "result")]
+        //public List<Player> Result { get; set; }
     }
 
-    public class Player
+    public class ActivePlayer
     {
-        [JsonProperty(PropertyName = "Name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "playerid")]
+        public int PlayerId { get; set; }
 
-        [JsonProperty(PropertyName = "playsaudio")]
-        public bool PlaysAudio { get; set; }
-
-        [JsonProperty(PropertyName = "playsvideo")]
-        public bool PlaysVideo { get; set; }
+        [JsonProperty(PropertyName = "playertype")]
+        public string PlayerType { get; set; }
 
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+    }
+
+    public class PlayerSpeed
+    {
+        [JsonProperty(PropertyName = "speed")]
+        public int Speed { get; set; }
     }
 }

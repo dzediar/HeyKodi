@@ -1,4 +1,5 @@
 ﻿using HeyKodi.Model;
+using HeyKodi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -26,7 +27,8 @@ namespace HeyKodi
 
             try
             {
-                zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Error, MainWindow?.Title ?? "HeyKodi", e.Exception, zSpeechBalloonButtonsType.Ok);
+                MainViewModel.Instance.ShowError(e.Exception.Message, e.Exception);
+                //zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Error, MainWindow?.Title ?? "HeyKodi", e.Exception, zSpeechBalloonButtonsType.Ok);
             }
             catch
             {

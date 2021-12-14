@@ -5,16 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HeyKodi"
         xmlns:views="clr-namespace:HeyKodi.Views"        
+        xmlns:viewmodels="clr-namespace:HeyKodi.ViewModels"
         xmlns:zw="clr-namespace:zComp.Wpf;assembly=zComp.Wpf"
         mc:Ignorable="d"
         Icon="pack://application:,,,/HeyKodi;component/Images/kodi_32x32.ico"
-        Title="Hey Kodi !" 
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="{x:Null}"
         WindowStyle="None"
         ResizeMode="NoResize">
+	<zw:zSmoothWindow.Title>
+		<Binding Path="Title" Mode="OneTime" Source="{x:Static viewmodels:MainViewModel.Instance}" />
+	</zw:zSmoothWindow.Title>
     <Grid>
         <views:MainView/>
     </Grid>

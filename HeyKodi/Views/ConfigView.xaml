@@ -61,7 +61,7 @@
                                  IsEnabled="{Binding HeyKodiConfig.NeedHeyKodiWakeup, Mode=TwoWay}"/>
                 </zw:zStackPanel>
                 <zwlv:zListView Grid.Row="1" AllowColumnMove="False" AllowColumnResize="True" AllowColumnSort="False" BorderThickness="0"
-                        HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="200"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="150"
                         ItemsSource="{Binding HeyKodiConfig.Commands, Mode=OneWay}">
                     <zwlv:zListView.MouseOverRowBrush>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -84,17 +84,25 @@
             </zw:zGrid>
         </zw:zTabGroupBox>
         <zw:zTabGroupBox Header="Divers" IsExpandable="False" IsExpanded="True" Margin="0,2,0,2">
-            <zw:zStackPanel Orientation="Vertical">
-                <zw:zStackPanel Orientation="Horizontal">
-                    <zw:zTextBlock Text="Volume"/>
-                    <Slider Minimum="0" Maximum="1" Value="{Binding HeyKodiConfig.Volume, Mode=TwoWay}" Width="150" VerticalAlignment="Center"/>
-                </zw:zStackPanel>
-				<zw:zCheckBox Content="Lancer Hey Kodi au démarrage de windows" IsChecked="{Binding HeyKodiConfig.RunAtWindowsStart, Mode=TwoWay}"/>
-				<zw:zCheckBox Content="Minimiser Hey Kodi lorsqu'il est en attente" IsChecked="{Binding HeyKodiConfig.MinimizeWhenPending, Mode=TwoWay}"/>
-				<zw:zCheckBox Content="Utiliser la synthèse vocale pour poser des question" IsChecked="{Binding HeyKodiConfig.UseSpeechSynthesizer, Mode=TwoWay}"/>
-				<zw:zCheckBox Content="Mode debug" IsChecked="{Binding HeyKodiConfig.DebugMode, Mode=TwoWay}"/>
-				<zw:zButton Content="Afficher la documentation" Command="{Binding ShowDocumentationCommand, Mode=OneWay}"/>
-			</zw:zStackPanel>
+			<zw:zGrid>
+				<zw:zGrid.ColumnDefinitions>
+					<ColumnDefinition Width="0.5*"/>
+					<ColumnDefinition Width="0.5*"/>
+				</zw:zGrid.ColumnDefinitions>
+				<zw:zStackPanel Grid.Column="0" Orientation="Vertical">
+					<zw:zStackPanel Orientation="Horizontal">
+						<zw:zTextBlock Text="Volume"/>
+						<Slider Minimum="0" Maximum="1" Value="{Binding HeyKodiConfig.Volume, Mode=TwoWay}" Width="150" VerticalAlignment="Center"/>
+					</zw:zStackPanel>
+					<zw:zCheckBox Content="Lancer Hey Kodi au démarrage de windows" IsChecked="{Binding HeyKodiConfig.RunAtWindowsStart, Mode=TwoWay}"/>
+					<zw:zCheckBox Content="Minimiser Hey Kodi lorsqu'il est en attente" IsChecked="{Binding HeyKodiConfig.MinimizeWhenPending, Mode=TwoWay}"/>
+				</zw:zStackPanel>
+				<zw:zStackPanel Grid.Column="1" Orientation="Vertical">
+					<zw:zCheckBox Content="Utiliser la synthèse vocale pour poser des question" IsChecked="{Binding HeyKodiConfig.UseSpeechSynthesizer, Mode=TwoWay}"/>
+					<zw:zCheckBox Content="Mode debug" IsChecked="{Binding HeyKodiConfig.DebugMode, Mode=TwoWay}"/>
+					<zw:zButton Content="Afficher la documentation" Command="{Binding ShowDocumentationCommand, Mode=OneWay}" HorizontalAlignment="Left"/>
+				</zw:zStackPanel>
+			</zw:zGrid>
         </zw:zTabGroupBox>
     </zw:zStackPanel>
 </UserControl>

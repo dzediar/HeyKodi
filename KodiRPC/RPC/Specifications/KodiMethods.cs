@@ -28,6 +28,7 @@ namespace KodiRPC.RPC.Specifications
         public const string QuitApplication = "Application.Quit";
         public const string StopPlayer = "Player.Stop";
         public const string GetPlayers = "Player.GetPlayers";
+        public const string GetActivePlayers = "Player.GetActivePlayers";
         public const string PlayPause = "Player.PlayPause";
         public const string SetMute = "Application.SetMute";
         public const string EjectOpticalDrive = "System.EjectOpticalDrive";
