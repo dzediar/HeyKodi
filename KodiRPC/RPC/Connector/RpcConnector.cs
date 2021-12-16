@@ -45,14 +45,14 @@ namespace KodiRPC.RPC.Connector
                 Console.WriteLine(jsonRpcRequest.ToString());
             }
 
-            var uri = $"http://{_service.Host}:{_service.Port}/jsonrpc";
+            var uri = $"http://{_service.Config.KodiApiHost}:{_service.Config.KodiApiPort}/jsonrpc";
 
             var webRequest = (HttpWebRequest)WebRequest.Create(uri);
             webRequest.ContentType = "application/json-rpc";
             webRequest.KeepAlive = false;
             webRequest.Method = "POST";
             webRequest.Timeout = timeout;
-            webRequest.Credentials = new NetworkCredential(_service.Username, _service.Password);
+            webRequest.Credentials = new NetworkCredential(_service.Config.KodiApiUserName, _service.Config.KodiApiPassword);
 
             try
             {
@@ -157,7 +157,7 @@ namespace KodiRPC.RPC.Connector
                     throw new RpcRequestTimeoutException(e.Message);
                 }
 
-                throw new RpcException("An unknown web exception occured while trying to read the JSON response", e);
+                throw new RpcException("An unknown web exception occured while trying to read the JSON response.", e);
             }
             catch (JsonException e)
             {
@@ -170,7 +170,7 @@ namespace KodiRPC.RPC.Connector
             }
             catch (Exception e)
             {
-                throw new Exception($"A problem was encountered while calling MakeRpcRequest() for: {jsonRpcRequest.Method} with request object {jsonRpcRequest}:  \nException: {e.Message}"); // with parameters: {qryParams}. \nException: {e.Message}");
+                throw new Exception($"A problem was encountered while calling MakeRpcRequest() for: {jsonRpcRequest.Method} with request object {jsonRpcRequest}:  \nException: {e.Message}."); // with parameters: {qryParams}. \nException: {e.Message}");
             }
         }
     }

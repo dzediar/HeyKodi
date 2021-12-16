@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using zComp.Wpf;
@@ -16,23 +17,68 @@ namespace HeyKodi
     /// </summary>
     public partial class App : Application
     {
+        Mutex mutex = new System.Threading.Mutex(false, "HeyKodiUniqueMutexName");
+
         public App()
         {
+            this.Startup += App_Startup;
+            this.Exit += App_Exit;
             this.DispatcherUnhandledException += App_DispatcherUnhandledException;
         }
 
+        private void App_Exit(object sender, ExitEventArgs e)
+        {
+            ReleaseMutex();
+        }
+
+        private void App_Startup(object sender, StartupEventArgs e)
+        {
+            if (mutex.WaitOne(0, false))
+            {
+                // Run the application
+            }
+            else
+            {
+                ReleaseMutex();
+                MessageBox.Show("Hey Kodi est déjà lancé.");
+                Shutdown(-1);
+            }
+        }
+
+        private void ReleaseMutex()
+        {
+            mutex?.Close();
+            mutex = null;
+        }
+
+        private bool showingError = false;
+
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
+            if (showingError)
+            {
+                e.Handled = true;
+                return;
+            }
+
             e.Handled = !(e.Exception is CriticalApplicationException);
+
+            showingError = true;
 
             try
             {
-                MainViewModel.Instance.ShowError(e.Exception.Message, e.Exception);
-                //zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Error, MainWindow?.Title ?? "HeyKodi", e.Exception, zSpeechBalloonButtonsType.Ok);
+                try
+                {
+                    MainViewModel.Instance.ShowMessage(Messages.ShowMessageType.Error, e.Exception);
+                }
+                catch
+                {
+                    MessageBox.Show(e.Exception.ToString());
+                }
             }
-            catch
+            finally
             {
-                MessageBox.Show(e.Exception.ToString());
+                showingError = false;
             }
         }
     }

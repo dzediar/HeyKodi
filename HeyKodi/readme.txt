@@ -29,10 +29,15 @@ x Mettre les sources sous github
 x Créer une doc succinte dans le wiki
 x Faire en sorte que l'appli se lance au démarrage de windows
 x Tester toutes les commandes sur le mediacenter en utilisant l'installer
-Essayer d'ajouter la grammaire des titres de film car la reconnaissance vocale est nulle
+x Vérifier le wrapptext dans l'infobulle pour les longs messages
+x Essayer d'ajouter la grammaire des titres de film car la reconnaissance vocale est nulle, récupérer les musiques et les séries tv, les auteurs aussi
+x Tester l'utilisation d'un mot de passe
+x Vérifier au lancement de heykodi si il est déjà lancé
+x Regarder les warnings
+Gérer le souci de l'ouverture de heykodi avant kodi+
 Créer une première release
 
-
+C'est très mal codé, nettoyer le code, tout mettre à sa place dans les bonnes couches
 Choix des langues de reconnaissance et de synthèse vocale
 Commande avec comme paramètre un pourcentage (volume, ...)
 Localiser l'appli

@@ -1,4 +1,5 @@
 ﻿using KodiRPC.RPC.Specifications;
+using KodiRPC.Services;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
@@ -24,7 +25,7 @@ namespace HeyKodi.Model
         public event PropertyChangedEventHandler PropertyChanged;
     }
 
-    public class HeyKodiConfig : HeyKodiConfigElementBase
+    public class HeyKodiConfig : HeyKodiConfigElementBase, IRpcConnectorConfig
     {
         private string kodiApiHost = "localhost";
 
@@ -295,7 +296,7 @@ namespace HeyKodi.Model
                     result = JsonConvert.DeserializeObject<HeyKodiConfig>(System.IO.File.ReadAllText(confPath, Encoding.UTF8));
                     result.Consolidate();
                 }
-                catch (Exception ex)
+                catch
                 {
                     result = new HeyKodiConfig().Init();
                 }
@@ -324,7 +325,7 @@ namespace HeyKodi.Model
 
                 System.IO.File.WriteAllText(confPath, JsonConvert.SerializeObject(config));
             }
-            catch (Exception ex)
+            catch
             {
                 config.Init();
             }
@@ -351,7 +352,7 @@ namespace HeyKodi.Model
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 config.RunAtWindowsStart = false;
             }
@@ -365,12 +366,12 @@ namespace HeyKodi.Model
             config.KodiApiPort = 5156;
             config.KodiApiUserName = "";
             config.KodiApiPassword = "";
-            config.NeedHeyKodiWakeup = true;
+            config.NeedHeyKodiWakeup = false;
             config.KodiWakeupSpeech = "codi";
             config.DebugMode = false;
-            config.Volume = 0.2;
+            config.Volume = 1;
             config.MinimizeWhenPending = false;
-            config.UseSpeechSynthesizer = true;
+            config.UseSpeechSynthesizer = false;
             config.Consolidate();
 
             return config;
@@ -421,8 +422,8 @@ namespace HeyKodi.Model
                 return string.Empty;
             }
 
-            var purgedSpeech = new string(speech.ToArray().Where(c => (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' ').ToArray());
-            var speechWords = purgedSpeech.Split(' ').Where(w => !string.IsNullOrWhiteSpace(w)).ToList();
+            var purgedSpeech = speech; // new string(speech.ToArray().Where(c => (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' ').ToArray());
+            var speechWords = purgedSpeech.Split(' ').Where(w => !string.IsNullOrWhiteSpace(w)).Select(w => w.Trim()).ToList();
             return string.Join(" ", speechWords);
         }
 
@@ -534,7 +535,7 @@ namespace HeyKodi.Model
                 new CommandInfos()
                 {
                     Description = "Afficher les vidéos",
-                    DefaultSpeech = "video",
+                    DefaultSpeech = "vidéo",
                     KodiApiMethod = KodiMethods.ActivateWindow,
                     ParameterRequired = false,
                 }
@@ -544,7 +545,7 @@ namespace HeyKodi.Model
                 new CommandInfos()
                 {
                     Description = "Afficher les chaînes de télévision",
-                    DefaultSpeech = "tv",
+                    DefaultSpeech = "télévision",
                     KodiApiMethod = KodiMethods.ActivateWindow,
                     ParameterRequired = false,
                 }
@@ -554,7 +555,7 @@ namespace HeyKodi.Model
                 new CommandInfos()
                 {
                     Description = "Afficher les jeux",
-                    DefaultSpeech = "jeu",
+                    DefaultSpeech = "jeu vidéo",
                     KodiApiMethod = KodiMethods.ActivateWindow,
                     ParameterRequired = false,
                 }

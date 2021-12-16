@@ -79,4 +79,22 @@ namespace KodiRPC.Responses.Types.Video.Details
         [JsonProperty(PropertyName = "imdbnumber")]
         public string ImdbNumber { get; set; } = "";
     }
+
+    public class Album : File
+    {
+        [JsonProperty(PropertyName = "songgenres")]
+        public Genre[] SongGenres { get; set; }
+
+        [JsonProperty(PropertyName = "artist")]
+        public string[] Artist { get; set; }
+    }
+
+    public class Genre
+    {
+        [JsonProperty(PropertyName = "genreid")]
+        public int GenreId { get; set; }
+
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; set; }
+    }    
 }

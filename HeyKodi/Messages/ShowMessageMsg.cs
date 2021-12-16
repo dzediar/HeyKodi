@@ -8,21 +8,14 @@ namespace HeyKodi.Messages
 {
     public class ShowMessageMsg : GalaSoft.MvvmLight.Messaging.MessageBase
     {
-        public ShowMessageMsg(object sender, string title, string message, ShowMessageType messageType)
+        public ShowMessageMsg(object sender, ShowMessageType messageType, string title, object message)
             : base(sender)
         {
-            Title = title;
-            Message = message;
             MessageType = messageType;
-        }
-
-        public ShowMessageMsg(object sender, string title, Exception exception)
-            : base(sender)
-        {
             Title = title;
-            Exception = exception;
-            MessageType = ShowMessageType.Error;
-        }   
+            Message = message as string;
+            Exception = message as Exception;
+        }
 
         public string Title { get; private set; }
 

@@ -25,4 +25,13 @@ namespace KodiRPC.Responses.VideoLibrary
         [JsonProperty(PropertyName = "limits")]
         public Limits Limits { get; set; }
     }
+
+    public class GetAlbumsResponse
+    {
+        [JsonProperty(PropertyName = "albums")]
+        public List<Album> Albums { get; set; }
+
+        [JsonProperty(PropertyName = "limits")]
+        public Limits Limits { get; set; }
+    }
 }

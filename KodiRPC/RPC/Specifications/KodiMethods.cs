@@ -49,6 +49,7 @@ namespace KodiRPC.RPC.Specifications
 
         #region Movies
         public const string GetMovies = "VideoLibrary.GetMovies";
+        public const string GetAlbums = "AudioLibrary.GetAlbums";
         public const string GetMovieDetails = "VideoLibrary.GetMovieDetails";
         public const string GetRecentlyAddedMovies = "VideoLibrary.GetRecentlyAddedMovies";
         #endregion

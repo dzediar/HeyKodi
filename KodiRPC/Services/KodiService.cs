@@ -21,16 +21,26 @@ using KodiRPC.RPC.Specifications;
 
 namespace KodiRPC.Services
 {
+    public interface IRpcConnectorConfig
+    {
+        string KodiApiHost { get; set; }
+        int KodiApiPort { get; set; }
+        string KodiApiUserName { get; set; }
+        string KodiApiPassword { get; set; }
+    }
+
     public class KodiService : IKodiService
     {
         private readonly RpcConnector _rpcConnector;
 
         public readonly string ApiVersion = "v6";
 
-        public string Host { get; set; } = "localhost";
-        public string Port { get; set; } = "5156";
-        public string Username { get; set; } = "";
-        public string Password { get; set; } = "";
+        public IRpcConnectorConfig Config { get; set; }
+
+        //public string Host { get; set; } = "localhost";
+        //public string Port { get; set; } = "5156";
+        //public string Username { get; set; } = "";
+        //public string Password { get; set; } = "";
 
         public KodiService()
         {
@@ -150,6 +160,11 @@ namespace KodiRPC.Services
         public JsonRpcResponse<GetMoviesResponse> GetMovies(GetMoviesParams parameters, string requestId = "GetMoviesResponse")
         {
             return _rpcConnector.MakeRequest<GetMoviesResponse>(KodiMethods.GetMovies, parameters, requestId);
+        }
+
+        public JsonRpcResponse<GetAlbumsResponse> GetAlbums(GetAlbumsParams parameters, string requestId = "GetAlbumsResponse")
+        {
+            return _rpcConnector.MakeRequest<GetAlbumsResponse>(KodiMethods.GetAlbums, parameters, requestId);
         }
 
         public JsonRpcResponse<GetMovieDetailsResponse> GetMovieDetails(GetMovieDetailsParams parameters, string requestId="GetMovieDetailsResponse")

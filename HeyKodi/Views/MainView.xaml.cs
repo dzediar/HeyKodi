@@ -4,6 +4,8 @@ using HeyKodi.ViewModels;
 using KodiRPC.RPC.RequestResponse.Params.VideoLibrary;
 using KodiRPC.RPC.Specifications;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -61,12 +63,12 @@ namespace HeyKodi.Views
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
-            MainViewModel.Cleanup();
+            MainViewModel?.Cleanup();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Question, MainViewModel.Title,
+            if (MainViewModel != null && zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Question, MainViewModel.Title,
                 "Etes-vous certain de vouloir quitter Hey Kodi ?", zSpeechBalloonButtonsType.YesNo) == zSpeechBalloonDialogResult.No)
             {
                 e.Cancel = true;
@@ -95,9 +97,8 @@ namespace HeyKodi.Views
                         object title = msg.Title ?? MainViewModel.Title;
 
                         var messageType = zSpeechBalloonIcon.Information;
-                        //object message = msg.Exception == null ? msg.Message :
-                        //    (MainViewModel.HeyKodiConfig.DebugMode ? (object)msg.Exception : msg.Exception.ToMessageRecursive());
-                        object message = msg.Exception == null ? msg.Message : (object)msg.Exception;
+                        var message = msg.Exception == null ? msg.Message : 
+                            (MainViewModel?.HeyKodiConfig?.DebugMode == true ? (object)msg.Exception : (object)msg.Exception.ToMessageRecursive());
                         var buttons = zSpeechBalloonButtonsType.Ok;
 
                         switch (msg.MessageType)
@@ -114,49 +115,12 @@ namespace HeyKodi.Views
                                 break;
                         }
 
-                        var r = zSpeechBalloon.ShowDialogBalloon(messageType, title, message, buttons);
+                        var dialogResult = zSpeechBalloon.ShowDialogBalloon(messageType, title, message, buttons);
 
-                        msg.Result = r == zSpeechBalloonDialogResult.Yes || r == zSpeechBalloonDialogResult.Ok;
+                        msg.Result = dialogResult == zSpeechBalloonDialogResult.Yes || dialogResult == zSpeechBalloonDialogResult.Ok;
                     });
                 }
             );
-
-/*            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<RunKodiCommandMsg>
-            (
-                Application.Current,
-                msg =>
-                {
-                    //return;
-
-                    Dispatcher.Invoke(() =>
-                    {
-                        MainViewModel.KodiService.Host = MainViewModel.HeyKodiConfig.KodiApiHost;
-                        MainViewModel.KodiService.Port = MainViewModel.HeyKodiConfig.KodiApiPort.ToString();
-                        MainViewModel.KodiService.Username = MainViewModel.HeyKodiConfig.KodiApiUserName;
-                        MainViewModel.KodiService.Password = MainViewModel.HeyKodiConfig.KodiApiPassword;
-
-                        switch (msg.Command)
-                        {
-                            case KodiMethods.ExecuteAddon:
-                                MainViewModel.KodiService.ExecuteAddon(new ExecuteAddonParams()
-                                {
-                                    AddonId = "script.globalsearch",
-                                    Wait = false,
-                                    Params = new string[] { "searchstring=" + msg.Parameter }
-                                });
-                                break;
-                            case KodiMethods.InputHome:
-                                MainViewModel.KodiService.InputHome();
-                                break;
-                            case KodiMethods.InputBack:
-                                MainViewModel.KodiService.InputBack();
-                                break;
-                            default:
-                                break;
-                        }
-                    });
-                }
-            );*/
 
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<PlaySoundMsg>
             (
@@ -167,18 +131,21 @@ namespace HeyKodi.Views
                     {
                         ActivateMainWindow();
 
-                        MainViewModel.KodiSpeechRecognizer.RecognizeAsyncCancel();
+                        if (MainViewModel.HeyKodiConfig.Volume > 0.05)
+                        {
+                            MainViewModel.KodiSpeechRecognizer.RecognizeAsyncCancel();
 
-                        if (MainViewModel.HeyKodiConfig.UseSpeechSynthesizer &&
-                            !string.IsNullOrWhiteSpace(msg.Speech) && MainViewModel.SpeechSynthesizer != null)
-                        {
-                            MainViewModel.SpeechSynthesizer.Volume = (int)(MainViewModel.HeyKodiConfig.Volume * 100.0);
-                            MainViewModel.SpeechSynthesizer.SpeakAsync(msg.Speech);
-                        }
-                        else
-                        {
-                            player.Volume = MainViewModel.HeyKodiConfig.Volume * 0.20;
-                            player.Source = new Uri(msg.SoundSource);
+                            if (MainViewModel.HeyKodiConfig.UseSpeechSynthesizer &&
+                                !string.IsNullOrWhiteSpace(msg.Speech) && MainViewModel.SpeechSynthesizer != null)
+                            {
+                                MainViewModel.SpeechSynthesizer.Volume = (int)(MainViewModel.HeyKodiConfig.Volume * 100.0);
+                                MainViewModel.SpeechSynthesizer.SpeakAsync(msg.Speech);
+                            }
+                            else
+                            {
+                                player.Volume = MainViewModel.HeyKodiConfig.Volume * 0.20;
+                                player.Source = new Uri(msg.SoundSource);
+                            }
                         }
                     });
                 }

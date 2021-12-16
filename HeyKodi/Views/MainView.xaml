@@ -21,29 +21,20 @@
         <Style x:Key="MainImageStyle" TargetType="Image">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="Width" Value="160" />
-            <Setter Property="Height" Value="160" />
-            <Setter Property="Stretch" Value="Uniform" />
+            <Setter Property="Width" Value="140" />
+            <Setter Property="Height" Value="140" />
+			<Setter Property="Stretch" Value="Uniform" />
             <Setter Property="RenderTransformOrigin" Value="0.5 0.5" />
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <RotateTransform />
                 </Setter.Value>
             </Setter>
-            <!--
-            <Style.Triggers>
-                <Trigger Property="Visibility" Value="Visible">
-                    <Trigger.EnterActions>
-                        <BeginStoryboard>
-                            <Storyboard RepeatBehavior="Forever">
-                                <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" 
-                                                 From="-5" To="5" Duration="0:0:0.500" AutoReverse="True" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </Trigger.EnterActions>
-                </Trigger>
-            </Style.Triggers>
-            -->
+			<Setter Property="Effect">
+				<Setter.Value>
+					<DropShadowEffect Opacity="0.5" BlurRadius="15" Color="DimGray" Direction="290" ShadowDepth="8" RenderingBias="Performance"/>
+				</Setter.Value>
+			</Setter>
         </Style>
 
 
@@ -99,10 +90,6 @@
                                 <DropShadowEffect Opacity="0.3" Color="DimGray" ShadowDepth="4" RenderingBias="Performance"/>
                             </StackPanel.Effect>
                             <Ellipse Style="{StaticResource LoadingEllipseStyle}" Width="80" Height="80" StrokeThickness="8"/>
-                            <!--<ContentControl Margin="8"
-                                        Content="{TemplateBinding Content}"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"/>-->
                         </StackPanel>
                     </ControlTemplate>
                 </Setter.Value>
@@ -113,28 +100,33 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="Snow"/>
             <Setter Property="CornerRadius" Value="80"/>
-            <Setter Property="Width" Value="160"/>
-            <Setter Property="Height" Value="160"/>
-            <Setter Property="Margin" Value="20,0,20,0"/>
-            <Style.Triggers>
-                <!--
-                <DataTrigger Binding="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" Value="Stopped">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" Value="Pending">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-                -->
-                <DataTrigger Binding="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" Value="PendingCommand">
-                    <Setter Property="Background" Value="Orange"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" Value="PendingParameter">
-                    <Setter Property="Background" Value="Tomato"/>
-                </DataTrigger>
-            </Style.Triggers>
+            <Setter Property="Width" Value="170"/>
+            <Setter Property="Height" Value="170"/>
+            <Setter Property="Margin" Value="10"/>
         </Style>
 
-    </UserControl.Resources>
+		<Style x:Key="HeyKodiEllipseStyle" TargetType="Ellipse">
+			<Setter Property="StrokeThickness" Value="1"/>
+			<Setter Property="Stroke" Value="Snow"/>
+			<Setter Property="Width" Value="160"/>
+			<Setter Property="Height" Value="160"/>
+			<Setter Property="Margin" Value="10"/>
+			<Setter Property="Effect">
+				<Setter.Value>
+					<DropShadowEffect Opacity="0.5" BlurRadius="15" Color="DimGray" Direction="290" ShadowDepth="8" RenderingBias="Performance"/>
+				</Setter.Value>
+			</Setter>
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" Value="PendingCommand">
+					<Setter Property="Fill" Value="Orange"/>
+				</DataTrigger>
+				<DataTrigger Binding="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" Value="PendingParameter">
+					<Setter Property="Fill" Value="Tomato"/>
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
+
+	</UserControl.Resources>
     <zw:zBorder Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" 
                 CornerRadius="0" Padding="0" Margin="20" BorderThickness="1">
         <zw:zBorder.Effect>
@@ -186,54 +178,50 @@
                 </zw:zStackPanel>
             </zw:zGrid>
 
-            <Image Source="pack://application:,,,/HeyKodi;component/Images/question.png" Grid.Row="2" 
-                   Style="{StaticResource MainImageStyle}">
-                <i:Interaction.Behaviors>
-                    <zwbehav:zAnimationBehavior AnimationType="Fade, BounceAfter" TriggerMode="Triggered" InvertTrigger="False"
-                                                Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="Pending" SkipAtLoad="False"
-                                                AnimationDirection="Appearance" AnimationDuration="0:0:0.200"/>
-                    <zwbehav:zAnimationBehavior AnimationType="Fade" TriggerMode="Triggered" InvertTrigger="True"
-                                                Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="Pending" SkipAtLoad="False"
-                                                AnimationDirection="Disappearance" AnimationDuration="0:0:0.200"/>
-                </i:Interaction.Behaviors>
-                <Image.Effect>
-                    <DropShadowEffect Opacity="0.5" BlurRadius="15" Color="DimGray" Direction="290" ShadowDepth="8" RenderingBias="Performance"/>
-                </Image.Effect>
-            </Image>
+			<zw:zBorder Style="{StaticResource HeyKodiBorderStyle}" Grid.Row="2"
+						Background="Transparent" BorderThickness="0">
+				<zw:zGrid>
+					<Ellipse Style="{DynamicResource {x:Static zw:zCompRepository.LoadingEllipseStyleKey}}"
+						     Width="160" Height="160" StrokeThickness="16">
+						<Ellipse.Stroke>
+							<LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
+								<GradientStop Offset="0" Color="#10FFFFFF" />
+								<GradientStop Offset="1" Color="#50FFFFFF" />
+							</LinearGradientBrush>
+						</Ellipse.Stroke>
+					</Ellipse>
+					<Image Source="pack://application:,,,/HeyKodi;component/Images/question.png"
+						Style="{StaticResource MainImageStyle}">
+						<i:Interaction.Behaviors>
+							<zwbehav:zAnimationBehavior AnimationType="Fade, BounceAfter" TriggerMode="Triggered" InvertTrigger="False"
+														Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="Pending" SkipAtLoad="False"
+														AnimationDirection="Appearance" AnimationDuration="0:0:0.200"/>
+							<zwbehav:zAnimationBehavior AnimationType="Fade" TriggerMode="Triggered" InvertTrigger="True"
+														Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="Pending" SkipAtLoad="False"
+														AnimationDirection="Disappearance" AnimationDuration="0:0:0.200"/>
+						</i:Interaction.Behaviors>
+					</Image>
+				</zw:zGrid>
+			</zw:zBorder>
 
-            <zw:zBorder Style="{StaticResource HeyKodiBorderStyle}" Grid.Row="2">
-                <i:Interaction.Behaviors>
-                    <zwbehav:zAnimationBehavior AnimationType="VerticalFolding, HorizontalFolding, Fade, BounceAfter" TriggerMode="Triggered" InvertTrigger="False"
-                                                Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="PendingCommand, PendingParameter"
-                                                AnimationDirection="Appearance" AnimationDuration="0:0:0.200"/>
-                    <zwbehav:zAnimationBehavior AnimationType="VerticalFolding, HorizontalFolding, Fade" TriggerMode="Triggered" InvertTrigger="True"
-                                                Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="PendingCommand, PendingParameter"
-                                                AnimationDirection="Disappearance" AnimationDuration="0:0:0.200"/>
-                    <zwbehav:zAnimationBehavior AnimationType="Bounce" TriggerMode="Triggered" InvertTrigger="False"
-                                                Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="PendingParameter"
-                                                AnimationDirection="Appearance" AnimationDuration="0:0:0.200"/>
-                </i:Interaction.Behaviors>
-                <zw:zBorder.Effect>
-                    <DropShadowEffect Opacity="0.5" BlurRadius="15" Color="DimGray" Direction="290" ShadowDepth="8" RenderingBias="Performance"/>
-                </zw:zBorder.Effect>
-                <zw:zLabel Style="{StaticResource IsBusyLabelStyle}"/>
-            </zw:zBorder>
+			<zw:zGrid Grid.Row="2">
+				<i:Interaction.Behaviors>
+					<zwbehav:zAnimationBehavior AnimationType="VerticalGrow, HorizontalGrow, Fade, BounceAfter" TriggerMode="Triggered" InvertTrigger="False"
+												Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="PendingCommand, PendingParameter"
+												AnimationDirection="Appearance" AnimationDuration="0:0:0.200"/>
+					<zwbehav:zAnimationBehavior AnimationType="VerticalGrow, HorizontalGrow, Fade" TriggerMode="Triggered" InvertTrigger="True"
+												Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="PendingCommand, PendingParameter"
+												AnimationDirection="Disappearance" AnimationDuration="0:0:0.200"/>
+					<zwbehav:zAnimationBehavior AnimationType="Bounce" TriggerMode="Triggered" InvertTrigger="False"
+												Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="PendingParameter"
+												AnimationDirection="Appearance" AnimationDuration="0:0:0.200"/>
+				</i:Interaction.Behaviors>
+				<Ellipse Style="{StaticResource HeyKodiEllipseStyle}"/>
+				<zw:zLabel Style="{StaticResource IsBusyLabelStyle}"/>
+			</zw:zGrid>
 
-            <!--
-            <zw:zBorder Style="{StaticResource HeyKodiBorderStyle}" Grid.Row="1" Background="Red">
-                <i:Interaction.Behaviors>
-                    <zwbehav:zAnimationBehavior AnimationType="Fade, BounceAfter" TriggerMode="Triggered" InvertTrigger="False"
-                                                Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="PendingParameter"
-                                                AnimationDirection="Appearance" AnimationDuration="0:0:0.200"/>
-                    <zwbehav:zAnimationBehavior AnimationType="Fade" TriggerMode="Triggered" InvertTrigger="True"
-                                                Trigger="{Binding KodiSpeechRecognizer.State, Mode=OneWay}" TriggerValue="PendingParameter"
-                                                AnimationDirection="Disappearance" AnimationDuration="0:0:0.200"/>
-                </i:Interaction.Behaviors>
-                <zw:zLabel Style="{StaticResource IsBusyLabelStyle}"/>
-            </zw:zBorder>
-            -->
 
-            <zw:zStackPanel Grid.Row="4" Orientation="Vertical" Margin="4,0,4,4"
+			<zw:zStackPanel Grid.Row="4" Orientation="Vertical" Margin="4,0,4,4"
                             Background="{StaticResource {x:Static zw:zCompColors.ContainerControlBackgroundBrushKey}}"
                             Visibility="{Binding HeyKodiConfig.DebugMode, Mode=OneWay, Converter={x:Static zwconv:zBoolToVisibilityConverter.Instance}}">
                 <zw:zStackPanel Orientation="Horizontal">
