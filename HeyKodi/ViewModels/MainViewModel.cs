@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using HeyKodi.Messages;
 using HeyKodi.Model;
+using HeyKodi.Properties;
 using HeyKodi.Tools;
 using KodiRPC.Responses.VideoLibrary;
 using KodiRPC.RPC.RequestResponse.Params.VideoLibrary;
@@ -9,11 +10,13 @@ using KodiRPC.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Speech.Synthesis;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using zComp.Core.Helpers;
@@ -42,18 +45,37 @@ namespace HeyKodi.ViewModels
 
         private List<string> mediaGrammar;
 
+        private Dictionary<char, char> accents = new Dictionary<char, char>()
+        {
+            { 'à', 'a' },
+            { 'â', 'a' },
+            { 'ä', 'a' },
+            { 'ô', 'o' },
+            { 'ö', 'o' },
+            { 'ù', 'u' },
+            { 'û', 'u' },
+            { 'ü', 'u' },
+            { 'é', 'e' },
+            { 'è', 'e' },
+            { 'ê', 'e' },
+            { 'ë', 'e' },
+            { 'î', 'i' },
+            { 'ï', 'i' },
+        };
+
         private MainViewModel()
         {
+            ShowConfigurationCommand = new RelayCommand(() => ShowConfiguration());
+            ShowDocumentationCommand = new RelayCommand(() => ShowDocumentation());
+            MinimizeCommand = new RelayCommand(() => Minimize());
+            AddShellCommandCommand = new RelayCommand(() => AddShellCommand());
+            RemoveShellCommandCommand = new RelayCommand(() => RemoveShellCommand());
         }
 
         public void Init()
         {
             try
             {
-                ShowConfigurationCommand = new RelayCommand(() => ShowConfiguration());
-                ShowDocumentationCommand = new RelayCommand(() => ShowDocumentation());
-                MinimizeCommand = new RelayCommand(() => Minimize());
-
                 KodiService = new KodiService();
 
                 KodiService.Config = HeyKodiConfig = HeyKodiConfigExtensions.Load();
@@ -63,26 +85,16 @@ namespace HeyKodi.ViewModels
                 KodiSpeechRecognizer.PropertyChanged += KodiSpeechRecognizer_PropertyChanged;
 
                 StartRecognition();
-
-                SpeechSynthesizer = new SpeechSynthesizer();
-
-                var installedVoices = SpeechSynthesizer.GetInstalledVoices();
-
-                if (installedVoices.Count == 0)
-                {
-                    SpeechSynthesizer.Dispose();
-                    SpeechSynthesizer = null;
-                }
-                else
-                {
-                    var voiceToUse = installedVoices.FirstOrDefault(v => v.VoiceInfo.Culture.Name == System.Threading.Thread.CurrentThread.CurrentCulture.Name) ?? installedVoices[0];
-                    SpeechSynthesizer.SelectVoice(voiceToUse.VoiceInfo.Name);
-                }
             }
             catch (Exception ex)
-            {
-                throw new CriticalApplicationException("Une erreur critique s'est produite lors de l'initialisation de Hey Kodi, l'application va se fermer.", ex);
+            { 
+                throw new CriticalApplicationException(Resources.MISC_CRITICAL_ERROR, ex);
             }
+        }
+
+        private void SpeechSynthesizer_SpeakCompleted(object sender, System.Speech.Synthesis.SpeakCompletedEventArgs e)
+        {
+            KodiSpeechRecognizer.RecognizeAsync();
         }
 
         private void KodiSpeechRecognizer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -112,162 +124,274 @@ namespace HeyKodi.ViewModels
             }
         }
 
-        public bool RunKodiCommand(HeyKodiCommandEnum command, string parameter = null, bool mute = false)
+        public bool RunShellCommand(HeyKodiShellCommandConfig command, string parameter = null, bool mute = false)
         {
-            var result = false;
+            Exception exception = null;
 
             try
             {
-                if (command == HeyKodiCommandEnum.ShowHeyKodiConfig)
+                var psi = new ProcessStartInfo()
+                {
+                    FileName = command.CommandLine,
+                    Arguments = command.CommandArguments?.Replace(HeyKodiConfigExtensions.SHELL_COMMAND_PARAMETER, parameter ?? string.Empty),
+                    CreateNoWindow = true,
+                    ErrorDialog = true,
+                    UseShellExecute = true,
+                    WindowStyle = ProcessWindowStyle.Normal
+                };
+
+                Process.Start(psi);
+            }
+            catch (Exception ex)
+            {
+                exception = new Exception(Resources.MAINVIEWMODEL_SHELL_COMMAND_EXE_FAILED, ex);
+            }
+
+            if (exception != null)
+            {
+                if (!mute)
+                {
+                    PlaySound(KodiSpeechRecognizerSound.CancelSound);
+                }
+
+                ShowMessage(ShowMessageType.Error, exception);
+
+                return false;
+            }
+            else
+            {
+                if (!mute)
+                {
+                    PlaySound(KodiSpeechRecognizerSound.RunCommandSound);
+                }
+
+                return true;
+            }
+        }
+
+
+
+        public bool RunKodiCommand(HeyKodiKodyCommandConfig command, string parameter = null, bool mute = false)
+        {
+            Exception exception = null;
+
+            try
+            {
+                if (command.KodiCommand == HeyKodiCommandEnum.ShowHeyKodiConfig)
                 {
                     ShowConfiguration();
-                    result = true;
                 }
-                else if (command == HeyKodiCommandEnum.CancelHeyKodi)
+                else if (command.KodiCommand == HeyKodiCommandEnum.CancelHeyKodi)
                 {
                     KodiSpeechRecognizer.Cancel(false);
-                    result = true;
                 }
                 else
                 {
-                    try
+                    List<ActivePlayer> players = null;
+
+                    if (command.KodiCommand == HeyKodiCommandEnum.Search ||
+                        command.KodiCommand == HeyKodiCommandEnum.Youtube ||
+                        command.KodiCommand == HeyKodiCommandEnum.Home ||
+                        command.KodiCommand == HeyKodiCommandEnum.ShowGames ||
+                        command.KodiCommand == HeyKodiCommandEnum.ShowMusic ||
+                        command.KodiCommand == HeyKodiCommandEnum.ShowTV ||
+                        command.KodiCommand == HeyKodiCommandEnum.ShowVideos ||
+                        command.KodiCommand == HeyKodiCommandEnum.ShowWeather)
                     {
-
-                        List<ActivePlayer> players = null;
-
-                        if (command == HeyKodiCommandEnum.Search)
-                        {
-                            if (!(RunKodiCommand(HeyKodiCommandEnum.Back, null, true) &&
-                                RunKodiCommand(HeyKodiCommandEnum.Home, null, true)))
-                            {
-                                return false;
-                            }
-                        }
-                        else if (command == HeyKodiCommandEnum.Search ||
-                            command == HeyKodiCommandEnum.Home ||
-                            command == HeyKodiCommandEnum.ShowGames ||
-                            command == HeyKodiCommandEnum.ShowMusic ||
-                            command == HeyKodiCommandEnum.ShowTV ||
-                            command == HeyKodiCommandEnum.ShowVideos ||
-                            command == HeyKodiCommandEnum.ShowWeather)
-                        {
-                            if (!RunKodiCommand(HeyKodiCommandEnum.Back, null, true))
-                            {
-                                return false;
-                            }
-                        }
-                        else if (command == HeyKodiCommandEnum.Stop ||
-                            command == HeyKodiCommandEnum.Play ||
-                            command == HeyKodiCommandEnum.Pause)
-                        {
-                            players = KodiService.GetActivePlayers(new GetActivePlayersParams()).Result
-                                .Where(p => p.PlayerType == "internal").ToList();
-                        }
-
-                        //var kodiApiMethod = HeyKodiConfigExtensions.CommandRepository[command].KodiApiMethod;
-
-                        switch (command)
-                        {
-                            case HeyKodiCommandEnum.Search:
-                                KodiService.ExecuteAddon(new ExecuteAddonParams()
-                                {
-                                    AddonId = "script.globalsearch",
-                                    Wait = false,
-                                    Params = new string[] { "searchstring=" + parameter }
-                                });
-                                break;
-                            case HeyKodiCommandEnum.Home:
-                                KodiService.InputHome();
-                                break;
-                            case HeyKodiCommandEnum.Back:
-                                KodiService.InputBack();
-                                break;
-                            case HeyKodiCommandEnum.Quit:
-                                KodiService.QuitApplication();
-                                break;
-                            case HeyKodiCommandEnum.Stop:
-                                if (players != null && players.Count > 0)
-                                {
-                                    foreach (var p in players)
-                                    {
-                                        KodiService.StopPlayer(new StopPlayerParams() { PlayerId = p.PlayerId });
-                                    }
-                                }
-                                break;
-                            case HeyKodiCommandEnum.Play:
-                                if (players != null && players.Count > 0)
-                                {
-                                    foreach (var p in players)
-                                    {
-                                        var speed = KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId }).Result.Speed;
-                                        if (speed == 0)
-                                        {
-                                            KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId });
-                                        }
-                                    }
-                                }
-                                break;
-                            case HeyKodiCommandEnum.Pause:
-                                if (players != null && players.Count > 0)
-                                {
-                                    foreach (var p in players)
-                                    {
-                                        var speed = KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId }).Result.Speed;
-                                        if (speed > 0)
-                                        {
-                                            KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId });
-                                        }
-                                    }
-                                }
-                                break;
-                            case HeyKodiCommandEnum.MuteUnmute:
-                                KodiService.SetMute(new SetMuteParams());
-                                break;
-                            case HeyKodiCommandEnum.ShowVideos:
-                                KodiService.ActivateWindow("videos");
-                                break;
-                            case HeyKodiCommandEnum.ShowTV:
-                                KodiService.ActivateWindow("tvsearch");
-                                break;
-                            case HeyKodiCommandEnum.ShowGames:
-                                KodiService.ActivateWindow("games");
-                                break;
-                            case HeyKodiCommandEnum.ShowMusic:
-                                KodiService.ActivateWindow("music");
-                                break;
-                            case HeyKodiCommandEnum.ShowWeather:
-                                KodiService.ActivateWindow("weather");
-                                break;
-                            case HeyKodiCommandEnum.ShowFavourites:
-                                KodiService.ActivateWindow("favourites");
-                                break;
-                            case HeyKodiCommandEnum.EjectOpticalDrive:
-                                KodiService.EjectOpticalDrive(new EjectOpticalDriveParams());
-                                break;
-                            default:
-                                throw new Exception($"Unknown command : {command}");
-                        }
-
-                        result = true;
+                        KodiService.InputBack();
+                        //KodiService.InputHome();
                     }
-                    finally
+                    else if (command.KodiCommand == HeyKodiCommandEnum.Stop ||
+                        command.KodiCommand == HeyKodiCommandEnum.Play ||
+                        command.KodiCommand == HeyKodiCommandEnum.Pause ||
+                        command.KodiCommand == HeyKodiCommandEnum.Previous ||
+                        command.KodiCommand == HeyKodiCommandEnum.Next)
                     {
-                        //KodiSpeechRecognizer.RecognizeAsync();
+                        players = KodiService.GetActivePlayers(new GetActivePlayersParams()).Result
+                            .Where(p => p.PlayerType == "internal").ToList();
                     }
-                }
 
-                if (!mute)
-                {
-                    PlaySound(result ? KodiSpeechRecognizerSound.RunCommandSound : KodiSpeechRecognizerSound.CancelSound);
+                    switch (command.KodiCommand)
+                    {
+                        case HeyKodiCommandEnum.Search:
+                            KodiService.ExecuteAddon(new ExecuteAddonParams()
+                            {
+                                AddonId = "script.globalsearch",
+                                Wait = false,
+                                Params = new string[] { "searchstring=" + parameter }
+                            });
+                            break;
+                        case HeyKodiCommandEnum.Youtube:
+                            KodiService.ExecuteAddon(new ExecuteAddonParams()
+                            {
+                                AddonId = "plugin.video.youtube",
+                                Wait = false,
+                                Params = new string[] { "action=search_video", "q=" + parameter }
+                            });
+                            break;
+                        case HeyKodiCommandEnum.Home:
+                            KodiService.InputHome();
+                            break;
+                        case HeyKodiCommandEnum.Back:
+                            KodiService.InputBack();
+                            break;
+                        case HeyKodiCommandEnum.Select:
+                            KodiService.InputSelect();
+                            break;
+                        case HeyKodiCommandEnum.Right:
+                            KodiService.InputRight();
+                            break;
+                        case HeyKodiCommandEnum.Left:
+                            KodiService.InputLeft();
+                            break;
+                        case HeyKodiCommandEnum.Up:
+                            KodiService.InputUp();
+                            break;
+                        case HeyKodiCommandEnum.Down:
+                            KodiService.InputDown();
+                            break;
+                        case HeyKodiCommandEnum.Quit:
+                            KodiService.QuitApplication();
+                            break;
+                        case HeyKodiCommandEnum.Stop:
+                            if (players != null && players.Count > 0)
+                            {
+                                foreach (var p in players)
+                                {
+                                    KodiService.StopPlayer(new StopPlayerParams() { PlayerId = p.PlayerId });
+                                }
+                            }
+                            break;
+                        case HeyKodiCommandEnum.Play:
+                            if (players != null && players.Count > 0)
+                            {
+                                foreach (var p in players)
+                                {
+                                    var speed = KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId }).Result.Speed;
+                                    if (speed == 0)
+                                    {
+                                        KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId });
+                                    }
+                                }
+                            }
+                            break;
+                        case HeyKodiCommandEnum.Pause:
+                            if (players != null && players.Count > 0)
+                            {
+                                foreach (var p in players)
+                                {
+                                    var speed = KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId }).Result.Speed;
+                                    if (speed > 0)
+                                    {
+                                        KodiService.TogglePlayerPlayPause(new TogglePlayPauseParams() { PlayerId = p.PlayerId });
+                                    }
+                                }
+                            }
+                            break;
+                        case HeyKodiCommandEnum.Previous:
+                            if (players != null && players.Count > 0)
+                            {
+                                foreach (var p in players)
+                                {
+                                    KodiService.PlayerGoto(new PlayerGotoParams() { PlayerId = p.PlayerId, To = "previous" });
+                                }
+                            }
+                            break;
+                        case HeyKodiCommandEnum.Next:
+                            if (players != null && players.Count > 0)
+                            {
+                                foreach (var p in players)
+                                {
+                                    KodiService.PlayerGoto(new PlayerGotoParams() { PlayerId = p.PlayerId, To = "next" });
+                                }
+                            }
+                            break;
+                        case HeyKodiCommandEnum.MuteUnmute:
+                            KodiService.SetMute(new SetMuteParams());
+                            break;
+                        case HeyKodiCommandEnum.SetVolume:
+                            parameter = parameter.Trim(' ', '%');
+                            if (int.TryParse(parameter, out var volume))
+                            {
+                                if (volume < 10)
+                                {
+                                    volume = 10;
+                                }
+                                else
+                                {
+                                    if (volume > 100)
+                                    {
+                                        volume = 100;
+                                    }
+                                }
+
+                                KodiService.SetVolume(new SetVolumeParams() { Volume = (int)volume });
+                            }
+                            else
+                            {
+                                throw new Exception(string.Format(Resources.MAINVIEWMODEL_BAD_VOLUME_VALUE, parameter));
+                            }
+                            break;
+                        case HeyKodiCommandEnum.ShowVideos:
+                            KodiService.ActivateWindow("videos");
+                            break;
+                        case HeyKodiCommandEnum.ShowTV:
+                            KodiService.ActivateWindow("tvsearch");
+                            break;
+                        case HeyKodiCommandEnum.ShowGames:
+                            KodiService.ActivateWindow("games");
+                            break;
+                        case HeyKodiCommandEnum.ShowMusic:
+                            KodiService.ActivateWindow("music");
+                            break;
+                        case HeyKodiCommandEnum.ShowWeather:
+                            KodiService.ActivateWindow("weather");
+                            break;
+                        case HeyKodiCommandEnum.ShowFavourites:
+                            KodiService.ActivateWindow("favourites");
+                            break;
+                        case HeyKodiCommandEnum.ShowRadio:
+                            KodiService.ActivateWindow("radiochannels");
+                            break;
+                        case HeyKodiCommandEnum.EjectOpticalDrive:
+                            KodiService.EjectOpticalDrive(new EjectOpticalDriveParams());
+                            break;
+                        case HeyKodiCommandEnum.SystemShutdown:
+                            KodiService.SystemShutdown();
+                            break;
+                        case HeyKodiCommandEnum.SystemReboot:
+                            KodiService.SystemReboot();
+                            break;
+                        default:
+                            throw new Exception(string.Format(Resources.ERROR_UNKNOWN_COMMAND, command));
+                    }
                 }
             }
             catch (Exception ex)
             {
-                var exPlus = new Exception("L'exécution de la commande Kodi a échoué.", ex);
-                ShowMessage(ShowMessageType.Error, ex);
+                exception = new Exception(Resources.MAINVIEWMODEL_KODI_COMMAND_EXE_FAILED, ex);
             }
 
-            return result;
+            if (exception != null)
+            {
+                if (!mute)
+                {
+                    PlaySound(KodiSpeechRecognizerSound.CancelSound);
+                }
+
+                ShowMessage(ShowMessageType.Error, exception);
+
+                return false;
+            }
+            else
+            {
+                if (!mute)
+                {
+                    PlaySound(KodiSpeechRecognizerSound.RunCommandSound);
+                }
+
+                return true;
+            }
         }
 
         public void PlaySound(KodiSpeechRecognizerSound sound, string speech = null)
@@ -332,7 +456,7 @@ namespace HeyKodi.ViewModels
 
         private void BuildGrammar()
         {
-            if (mediaGrammar == null)
+            if (mediaGrammar == null && !string.IsNullOrWhiteSpace(heyKodiConfig.KodiApiHost))
             {
                 try
                 {
@@ -342,16 +466,10 @@ namespace HeyKodi.ViewModels
                     var tvShows = kodiService.GetTvShows(new GetTvShowsParams() { Properties = new string[] { "title", "genre" } });
                     var albums = kodiService.GetAlbums(new GetAlbumsParams() { Properties = new string[] { "title", "artist", "songgenres" } });
 
-
                     var moviesTitles = movies.Result.Movies
                         .Select(m => m.Title)
                         .Where(t => !string.IsNullOrWhiteSpace(t))
                         .Select(t => t.Trim().ToLower())
-                        //.Select(t => new string(t.ToArray()
-                        //    .Select(c => accents.ContainsKey(c) ? accents[c] : c)
-                        //    //.Where(c => (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' ')
-                        //    .ToArray()))
-                        //.Select(t => string.Join(" ", t.Split(' ').Where(w => !string.IsNullOrWhiteSpace(w)).Select(w => w.Trim())))
                         .Distinct()
                         .ToList();
 
@@ -360,7 +478,7 @@ namespace HeyKodi.ViewModels
                         .Where(mt => mt.Length > 1)
                         .SelectMany(mt => mt)
                         .Select(tp => tp.Trim())
-                        .Where(tp => !string.IsNullOrWhiteSpace(tp))
+                        .Where(tp => tp.Length > 3)
                         .ToList();
 
                     var moviesGenres = movies.Result.Movies
@@ -379,10 +497,6 @@ namespace HeyKodi.ViewModels
                         .Distinct()
                         .ToList();
 
-
-
-
-
                     var tvShowsTitles = tvShows.Result.TvShows
                         .Select(m => m.Title)
                         .Where(t => !string.IsNullOrWhiteSpace(t))
@@ -395,7 +509,7 @@ namespace HeyKodi.ViewModels
                         .Where(mt => mt.Length > 1)
                         .SelectMany(mt => mt)
                         .Select(tp => tp.Trim())
-                        .Where(tp => !string.IsNullOrWhiteSpace(tp))
+                        .Where(tp => tp.Length > 3)
                         .ToList();
 
                     var tvShowsGenres = tvShows.Result.TvShows
@@ -405,8 +519,6 @@ namespace HeyKodi.ViewModels
                         .Select(g => g.Trim().ToLower())
                         .Distinct()
                         .ToList();
-
-
 
                     var albumsTitles = albums.Result.Albums
                         .Select(m => m.Title)
@@ -420,7 +532,7 @@ namespace HeyKodi.ViewModels
                         .Where(mt => mt.Length > 1)
                         .SelectMany(mt => mt)
                         .Select(tp => tp.Trim())
-                        .Where(tp => !string.IsNullOrWhiteSpace(tp))
+                        .Where(tp => tp.Length > 3)
                         .ToList();
 
                     var albumsGenres = albums.Result.Albums
@@ -458,50 +570,126 @@ namespace HeyKodi.ViewModels
                 catch (Exception ex)
                 {
                     MainViewModel.Instance.ShowMessage(Messages.ShowMessageType.Warning,
-                        "Impossible de récupérer les titres des films / musiques présents dans Kodi : " + ex.ToMessageDetailed());
+                        Resources.MAINVIEWMODEL_GET_MEDIA_GRAMAR_FAILED + ex.ToMessageDetailed());
                 }
             }
 
-            grammar = HeyKodiConfig.Commands.Select(c => c.CommandSpeech).ToList();
-            
+            grammar = HeyKodiConfig.KodiCommands.Select(c => c.CommandSpeech)
+                .Union(HeyKodiConfig.ShellCommands.Select(c => c.CommandSpeech))
+                .Distinct().ToList();
+
             if (HeyKodiConfig.NeedHeyKodiWakeup && !string.IsNullOrWhiteSpace(HeyKodiConfig.KodiWakeupSpeech))
             {
                 grammar.Add(HeyKodiConfig.KodiWakeupSpeech);
             }
 
-            if (mediaGrammar != null)
+            for (int i = 10; i <= 100; i += 10)
             {
-                grammar.AddRange(mediaGrammar);
+                grammar.Add($"{i} %");
             }
 
-            grammar = grammar.Distinct().Where(g => g.Length > 3).Take(800).ToList();
+            if (mediaGrammar != null)
+            {
+                var mediaDoublons = mediaGrammar
+                    .Select(g => new KeyValuePair<string, string>(GetPurgedGrammar(g), g))
+                    .ToLookup(g => g.Key);
+
+                var filtredMediaDoublons = mediaDoublons
+                    .Select(d => d.OrderBy(dv => dv.Value.Length).First().Value)
+                    .Where(d => d.Length > 3)
+                    .ToList();
+
+                grammar.AddRange(filtredMediaDoublons);
+            }
+
+            grammar = grammar.Distinct().Where(g => g.Length > 3).Take(1000).ToList();
+        }
+
+        private string GetPurgedGrammar(string grammar)
+        {
+            return string.Join("", new string(grammar.ToArray()
+                    .Select(c => accents.ContainsKey(c) ? accents[c] : c)
+                    .Where(c => (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' ')
+                    .ToArray())
+                .Split(' ').Where(w => !string.IsNullOrWhiteSpace(w)).Select(w => w.Trim()));
         }
 
         public void StartRecognition()
         {
             BuildGrammar();
             KodiSpeechRecognizer.Start(grammar);
+
+            SpeechSynthesizer = new SpeechSynthesizer();
+
+            if (HeyKodiConfig.UseSpeechSynthesizer)
+            {
+                var installedVoices = SpeechSynthesizer.GetInstalledVoices();
+
+                if (installedVoices.Count == 0)
+                {
+                    SpeechSynthesizer.Dispose();
+                    SpeechSynthesizer = null;
+                }
+                else
+                {
+                    var voiceToUse = installedVoices.FirstOrDefault(v => v.VoiceInfo.Culture.Name == System.Threading.Thread.CurrentThread.CurrentCulture.Name) ?? installedVoices[0];
+                    SpeechSynthesizer.SelectVoice(voiceToUse.VoiceInfo.Name);
+                    SpeechSynthesizer.SpeakCompleted += SpeechSynthesizer_SpeakCompleted;
+                }
+            }
         }
 
         public void StopRecognition()
         {
+            if (SpeechSynthesizer != null)
+            {
+                SpeechSynthesizer.Dispose();
+                SpeechSynthesizer = null;
+            }
+
             KodiSpeechRecognizer.Stop();
         }
 
         private void ShowDocumentation()
         {
-            var docPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "HeyKodi.pdf");
+            var culture = string.IsNullOrWhiteSpace(HeyKodiConfig.Language) ? 
+                Thread.CurrentThread.CurrentCulture.Name.Substring(0, 2) : HeyKodiConfig.Language.Substring(0, 2);
+            
+            var docPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), $"HeyKodi.{culture}.pdf");
+
+            if (!File.Exists(docPath))
+            {
+                docPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), $"HeyKodi.EN.pdf");
+            }
+
             if (File.Exists(docPath))
             {
                 Process.Start(docPath);
             }
-        }
-        
+        }        
 
         private void Minimize()
         {
             var msg = new MinimizeHeyKodiMsg(this);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(msg);
+        }
+
+        private void AddShellCommand()
+        {
+            HeyKodiConfig.ShellCommands.Add(new HeyKodiShellCommandConfig()
+            {
+                CommandLine = string.Empty,
+                CommandArguments = string.Empty,
+                CommandSpeech = string.Empty
+            });
+        }
+
+        private void RemoveShellCommand()
+        {
+            if (SelectedApplicationCommmand != null)
+            {
+                HeyKodiConfig.ShellCommands.Remove(SelectedApplicationCommmand);
+            }
         }
 
         private void Activate()
@@ -580,6 +768,22 @@ namespace HeyKodi.ViewModels
             }
         }
 
+        private HeyKodiShellCommandConfig selectedApplicationCommmand;
+
+        public HeyKodiShellCommandConfig SelectedApplicationCommmand
+        {
+            get
+            {
+                return selectedApplicationCommmand;
+            }
+            set
+            {
+                selectedApplicationCommmand = value;
+                RaisePropertyChanged(nameof(SelectedApplicationCommmand));
+            }
+        }
+
+
         private RelayCommand showConfigurationCommand;
 
         public RelayCommand ShowConfigurationCommand
@@ -609,7 +813,36 @@ namespace HeyKodi.ViewModels
                 RaisePropertyChanged(nameof(ShowDocumentationCommand));
             }
         }
-        
+
+        private RelayCommand addShellCommandCommand;
+
+        public RelayCommand AddShellCommandCommand
+        {
+            get
+            {
+                return addShellCommandCommand;
+            }
+            private set
+            {
+                addShellCommandCommand = value;
+                RaisePropertyChanged(nameof(AddShellCommandCommand));
+            }
+        }
+
+        private RelayCommand removeShellCommandCommand;
+
+        public RelayCommand RemoveShellCommandCommand
+        {
+            get
+            {
+                return removeShellCommandCommand;
+            }
+            private set
+            {
+                removeShellCommandCommand = value;
+                RaisePropertyChanged(nameof(RemoveShellCommandCommand));
+            }
+        }
 
         private RelayCommand minimizeCommand;
 

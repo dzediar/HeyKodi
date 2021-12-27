@@ -1,20 +1,24 @@
-﻿using KodiRPC.RPC.Specifications;
+﻿using HeyKodi.Properties;
+using KodiRPC.RPC.Specifications;
 using KodiRPC.Services;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace HeyKodi.Model
 {
     public abstract class HeyKodiConfigElementBase : INotifyPropertyChanged
     {
-        protected void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -27,6 +31,61 @@ namespace HeyKodi.Model
 
     public class HeyKodiConfig : HeyKodiConfigElementBase, IRpcConnectorConfig
     {
+        public HeyKodiConfig()
+        {
+            Language = HeyKodiConfigExtensions.GetDefaultLanguage();
+        }
+
+        private static List<CultureInfo> supportedLanguages = new List<CultureInfo>()
+        {
+            CultureInfo.GetCultureInfo("en-US"),
+            CultureInfo.GetCultureInfo("fr-FR")
+        };
+
+        public static List<CultureInfo> SupportedLanguages
+        {
+            get
+            {
+                return supportedLanguages;
+            }
+        }
+
+        private string language;
+
+        public string Language
+        {
+            get
+            {
+                return language;
+            }
+            set
+            {
+                language = value;
+
+                CultureInfo culture = null;
+
+                if (string.IsNullOrWhiteSpace(language) || (culture = CultureInfo.GetCultureInfo(value)) == null)
+                {
+                    culture = Thread.CurrentThread.CurrentCulture.Name.StartsWith("fr") ?
+                        CultureInfo.GetCultureInfo("fr-FR") : CultureInfo.GetCultureInfo("en-US");
+                }
+
+                Resources.Culture = culture;
+
+                NotifyPropertyChanged(nameof(Language));
+
+                if (KodiCommands != null)
+                {
+                    foreach (var c in KodiCommands)
+                    {
+                        c.NotifyPropertyChanged("");
+                    }
+                }
+
+                System.Windows.MessageBox.Show(language);
+            }
+        }
+        
         private string kodiApiHost = "localhost";
 
         public string KodiApiHost 
@@ -102,7 +161,7 @@ namespace HeyKodi.Model
             }
         }
 
-        private string kodiWakeupSpeech = "codi";
+        private string kodiWakeupSpeech = "kodi";
 
         public string KodiWakeupSpeech
         {
@@ -190,28 +249,44 @@ namespace HeyKodi.Model
                 useSpeechSynthesizer = value;
                 NotifyPropertyChanged(nameof(UseSpeechSynthesizer));
             }
-        }        
+        }
 
-        private List<HeyKodiCommandConfig> commands;
+        private ObservableCollection<HeyKodiKodyCommandConfig> kodiCommands;
 
-        public List<HeyKodiCommandConfig> Commands
+        public ObservableCollection<HeyKodiKodyCommandConfig> KodiCommands
         {
             get
             {
-                return commands;
+                return kodiCommands;
             }
             set
             {
-                commands = value;
-                NotifyPropertyChanged(nameof(Commands));
+                kodiCommands = value;
+                NotifyPropertyChanged(nameof(KodiCommands));
+            }
+        }
+
+        private ObservableCollection<HeyKodiShellCommandConfig> shellCommands;
+
+        public ObservableCollection<HeyKodiShellCommandConfig> ShellCommands
+        {
+            get
+            {
+                return shellCommands;
+            }
+            set
+            {
+                shellCommands = value;
+                NotifyPropertyChanged(nameof(ShellCommands));
             }
         }
     }
 
-    public class HeyKodiCommandConfig : HeyKodiConfigElementBase
+    public class HeyKodiKodyCommandConfig : HeyKodiConfigElementBase
     {
         private HeyKodiCommandEnum kodiCommand;
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public HeyKodiCommandEnum KodiCommand
         {
             get
@@ -241,41 +316,98 @@ namespace HeyKodi.Model
         }
     }
 
+    public class HeyKodiShellCommandConfig : HeyKodiConfigElementBase
+    {
+        private string commandLine;
+
+        public string CommandLine
+        {
+            get
+            {
+                return commandLine;
+            }
+            set
+            {
+                commandLine = value;
+                NotifyPropertyChanged(nameof(CommandLine));
+            }
+        }
+
+        private string commandArguments;
+
+        public string CommandArguments
+        {
+            get
+            {
+                return commandArguments;
+            }
+            set
+            {
+                commandArguments = value;
+                NotifyPropertyChanged(nameof(CommandArguments));
+            }
+        }
+
+        private string commandSpeech;
+
+        public string CommandSpeech
+        {
+            get
+            {
+                return commandSpeech;
+            }
+            set
+            {
+                commandSpeech = value;
+                NotifyPropertyChanged(nameof(CommandSpeech));
+            }
+        }
+    }
+
+
     public enum HeyKodiCommandEnum
     {
         ShowHeyKodiConfig,
         CancelHeyKodi,
         Search,
+        Youtube,
         Home,
         Back,
+        Select,
+        Right,
+        Left,
+        Up,
+        Down,
         Quit,
         Stop,
         Play,
         Pause,
+        Previous,
+        Next,
         MuteUnmute,
-
-        ShowVideos, // videos
-        ShowTV, // tvsearch
-        ShowGames, // games
-        ShowMusic, // music
-        ShowWeather, // weather
-        ShowFavourites, // weather
-        EjectOpticalDrive
-
-        //favori (ajout)
-	    //go (sélection)
-	    //ping (mettre un timeout faible)
-	    //sous-titres => avec param
-	    //ejecter (lecteur optique)
-	    //dormir
-	    //éteindre
-	    //redémarrer
+        SetVolume,
+        ShowVideos, 
+        ShowTV, 
+        ShowGames, 
+        ShowMusic, 
+        ShowWeather, 
+        ShowFavourites,
+        ShowRadio,
+        EjectOpticalDrive,
+        SystemShutdown,
+        SystemReboot
     }
 
     public static class HeyKodiConfigExtensions
     {
+        private static JsonSerializerSettings serializerConfig = new JsonSerializerSettings()
+        {
+            Formatting = Formatting.Indented,
+        };
 
         private static string configFilePath;
+
+        public const string SHELL_COMMAND_PARAMETER = "%%param%%";
 
         public static string GetConfigFilePath()
         {
@@ -293,7 +425,7 @@ namespace HeyKodi.Model
             {
                 try
                 {
-                    result = JsonConvert.DeserializeObject<HeyKodiConfig>(System.IO.File.ReadAllText(confPath, Encoding.UTF8));
+                    result = JsonConvert.DeserializeObject<HeyKodiConfig>(System.IO.File.ReadAllText(confPath, Encoding.UTF8), serializerConfig);
                     result.Consolidate();
                 }
                 catch
@@ -323,7 +455,7 @@ namespace HeyKodi.Model
                     System.IO.Directory.CreateDirectory(confDir);
                 }
 
-                System.IO.File.WriteAllText(confPath, JsonConvert.SerializeObject(config));
+                System.IO.File.WriteAllText(confPath, JsonConvert.SerializeObject(config, serializerConfig));
             }
             catch
             {
@@ -360,8 +492,19 @@ namespace HeyKodi.Model
             return config;
         }
 
+
+        public static string GetDefaultLanguage()
+        {
+            var currentCultureName = Thread.CurrentThread.CurrentCulture.Name;
+
+            return (HeyKodiConfig.SupportedLanguages.FirstOrDefault(c => c.Name == currentCultureName) ??
+                HeyKodiConfig.SupportedLanguages.FirstOrDefault(c => c.Name.StartsWith(currentCultureName.Substring(0, 2))) ??
+                HeyKodiConfig.SupportedLanguages.First()).Name;
+        }
+
         public static HeyKodiConfig Init(this HeyKodiConfig config)
         {
+            config.Language = GetDefaultLanguage();
             config.KodiApiHost = "localhost";
             config.KodiApiPort = 5156;
             config.KodiApiUserName = "";
@@ -371,7 +514,7 @@ namespace HeyKodi.Model
             config.DebugMode = false;
             config.Volume = 1;
             config.MinimizeWhenPending = false;
-            config.UseSpeechSynthesizer = false;
+            config.UseSpeechSynthesizer = true;
             config.Consolidate();
 
             return config;
@@ -379,27 +522,34 @@ namespace HeyKodi.Model
 
         public static HeyKodiConfig Consolidate(this HeyKodiConfig config)
         {
+            if (!HeyKodiConfig.SupportedLanguages.Any(sl => sl.Name == config.Language))
+            {
+                config.Language = GetDefaultLanguage();
+            }
+
             config.KodiApiHost = config.KodiApiHost?.Trim();
             config.KodiApiPort = config.KodiApiPort < 1 || config.KodiApiPort > 65535 ? 5156 : config.KodiApiPort;
             config.KodiWakeupSpeech = ConsolidateSpeech(config.KodiWakeupSpeech);
 
-            if (config.Commands == null)
+            var kodiCommands = new List<HeyKodiKodyCommandConfig>();
+
+            if (config.KodiCommands != null)
             {
-                config.Commands = new List<HeyKodiCommandConfig>();
+                kodiCommands.AddRange(config.KodiCommands);
             }
 
-            var unknownCommands = config.Commands.Where(c => !CommandRepository.Keys.Contains(c.KodiCommand)).ToList();
+            var unknownCommands = kodiCommands.Where(c => !CommandRepository.Keys.Contains(c.KodiCommand)).ToList();
 
             foreach (var c in unknownCommands)
             {
-                config.Commands.Remove(c);
+                kodiCommands.Remove(c);
             }
 
             foreach (var c in CommandRepository)
             {
-                if (!config.Commands.Any(c2 => c2.KodiCommand == c.Key))
+                if (!kodiCommands.Any(c2 => c2.KodiCommand == c.Key))
                 {
-                    config.Commands.Add(new HeyKodiCommandConfig()
+                    kodiCommands.Add(new HeyKodiKodyCommandConfig()
                     {
                         KodiCommand = c.Key,
                         CommandSpeech = c.Value.DefaultSpeech
@@ -407,9 +557,21 @@ namespace HeyKodi.Model
                 }
             }
 
-            foreach (var cmd in config.Commands)
+            foreach (var cmd in kodiCommands)
             {
                 cmd.CommandSpeech = ConsolidateSpeech(cmd.CommandSpeech);
+            }
+
+            config.KodiCommands = new ObservableCollection<HeyKodiKodyCommandConfig>(kodiCommands);
+
+            if (config.ShellCommands == null)
+            {
+                config.ShellCommands = new ObservableCollection<HeyKodiShellCommandConfig>();
+            }
+            else
+            {
+                config.ShellCommands = new ObservableCollection<HeyKodiShellCommandConfig>(
+                    config.ShellCommands.Where(c => !(string.IsNullOrWhiteSpace(c.CommandSpeech) || string.IsNullOrWhiteSpace(c.CommandLine))));
             }
 
             return config;
@@ -433,9 +595,8 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.ShowHeyKodiConfig,
                 new CommandInfos()
                 {
-                    Description = "Affichage de la configuration de Hey Kodi",
-                    DefaultSpeech = "configuration",
-                    KodiApiMethod = null,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SHOW_HEYKODI_CONFIG,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_CONFIGURATION,
                     ParameterRequired = false,
                 }
             },
@@ -443,9 +604,8 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.CancelHeyKodi,
                 new CommandInfos()
                 {
-                    Description = "Annuler l'activation de Hey Kodi",
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_CANCEL_HEYKODI_ACTIVATION,
                     DefaultSpeech = "annuler",
-                    KodiApiMethod = null,
                     ParameterRequired = false,
                 }
             },
@@ -453,20 +613,28 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.Search,
                 new CommandInfos()
                 {
-                    Description = "Recherche Kodi (extension globalsearch)",
-                    DefaultSpeech = "recherche",
-                    KodiApiMethod = KodiMethods.ExecuteAddon,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_KODI_SEARCH,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SEARCH,
                     ParameterRequired = true,
-                    ParameterQuestion = "Que dois-je rechercher ?"
+                    GetParameterQuestion = () => Resources.KODY_COMMAND_QUESTION_SEARCH
                 }
             },
+            {
+                HeyKodiCommandEnum.Youtube,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_YOUTUBE_SEARCH,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_YOUTUBE,
+                    ParameterRequired = true,
+                    GetParameterQuestion = () => Resources.KODY_COMMAND_QUESTION_SEARCH
+                }
+            },            
             {
                 HeyKodiCommandEnum.Home,
                 new CommandInfos()
                 {
-                    Description = "Retour à l'accueil",
-                    DefaultSpeech = "accueil",
-                    KodiApiMethod = KodiMethods.InputHome,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_HOME,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_HOME,
                     ParameterRequired = false,
                 }
             },
@@ -474,9 +642,53 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.Back,
                 new CommandInfos()
                 {
-                    Description = "Retour en arrière",
-                    DefaultSpeech = "retour",
-                    KodiApiMethod = KodiMethods.InputBack,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_BACK,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_BACK,
+                    ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.Select,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SELECT,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SELECT,
+                    ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.Right,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_RIGHT,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_RIGHT,
+                    ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.Left,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_LEFT,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_LEFT,
+                    ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.Up,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_UP,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_UP,
+                    ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.Down,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_DOWN,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_DOWN,
                     ParameterRequired = false,
                 }
             },
@@ -484,9 +696,8 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.Quit,
                 new CommandInfos()
                 {
-                    Description = "Quitter Kodi",
-                    DefaultSpeech = "quitter",
-                    KodiApiMethod = KodiMethods.QuitApplication,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_QUIT,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_QUIT,
                     ParameterRequired = false,
                 }
             },
@@ -494,9 +705,8 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.Stop,
                 new CommandInfos()
                 {
-                    Description = "Arrêt de la lecture",
-                    DefaultSpeech = "stop",
-                    KodiApiMethod = KodiMethods.StopPlayer,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_STOP,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_STOP,
                     ParameterRequired = false,
                 }
             },
@@ -504,9 +714,8 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.Play,
                 new CommandInfos()
                 {
-                    Description = "Lancer la lecture",
-                    DefaultSpeech = "play",
-                    KodiApiMethod = KodiMethods.PlayPause,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_PLAY,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_PLAY,
                     ParameterRequired = false,
                 }
             },
@@ -514,9 +723,26 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.Pause,
                 new CommandInfos()
                 {
-                    Description = "Mettre la lecture en pause",
-                    DefaultSpeech = "pause",
-                    KodiApiMethod = KodiMethods.PlayPause,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_PAUSE,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_PAUSE,
+                    ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.Previous,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_PREVIOUS,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_PREVIOUS,
+                    ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.Next,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_NEXT,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_NEXT,
                     ParameterRequired = false,
                 }
             },
@@ -524,19 +750,27 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.MuteUnmute,
                 new CommandInfos()
                 {
-                    Description = "Mute",
-                    DefaultSpeech = "mioute",
-                    KodiApiMethod = KodiMethods.SetMute,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_MUTE,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_MUTE,
                     ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.SetVolume,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_VOLUME,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_VOLUME,
+                    ParameterRequired = true,
+                    GetParameterQuestion = () => Resources.KODY_COMMAND_QUESTION_VOLUME
                 }
             },
             {
                 HeyKodiCommandEnum.ShowVideos,
                 new CommandInfos()
                 {
-                    Description = "Afficher les vidéos",
-                    DefaultSpeech = "vidéo",
-                    KodiApiMethod = KodiMethods.ActivateWindow,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SHOWVIDEOS,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SHOWVIDEOS,
                     ParameterRequired = false,
                 }
             },
@@ -544,9 +778,8 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.ShowTV,
                 new CommandInfos()
                 {
-                    Description = "Afficher les chaînes de télévision",
-                    DefaultSpeech = "télévision",
-                    KodiApiMethod = KodiMethods.ActivateWindow,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SHOWTV,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SHOWTV,
                     ParameterRequired = false,
                 }
             },
@@ -554,9 +787,8 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.ShowGames,
                 new CommandInfos()
                 {
-                    Description = "Afficher les jeux",
-                    DefaultSpeech = "jeu vidéo",
-                    KodiApiMethod = KodiMethods.ActivateWindow,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SHOWGAMES,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SHOWGAMES,
                     ParameterRequired = false,
                 }
             },
@@ -564,9 +796,8 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.ShowMusic,
                 new CommandInfos()
                 {
-                    Description = "Afficher la musique",
-                    DefaultSpeech = "musique",
-                    KodiApiMethod = KodiMethods.ActivateWindow,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SHOWMUSIC,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SHOWMUSIC,
                     ParameterRequired = false,
                 }
             },
@@ -574,9 +805,8 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.ShowWeather,
                 new CommandInfos()
                 {
-                    Description = "Afficher la météo",
-                    DefaultSpeech = "meteo",
-                    KodiApiMethod = KodiMethods.ActivateWindow,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SHOWWEATHER,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SHOWWEATHER,
                     ParameterRequired = false,
                 }
             },
@@ -584,9 +814,17 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.ShowFavourites,
                 new CommandInfos()
                 {
-                    Description = "Afficher les favoris",
-                    DefaultSpeech = "favori",
-                    KodiApiMethod = KodiMethods.ActivateWindow,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SHOWFAVOURITES,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SHOWFAVOURITES,
+                    ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.ShowRadio,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SHOWRADIOS,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SHOWRADIOS,
                     ParameterRequired = false,
                 }
             },
@@ -594,25 +832,44 @@ namespace HeyKodi.Model
                 HeyKodiCommandEnum.EjectOpticalDrive,
                 new CommandInfos()
                 {
-                    Description = "Ejecter le disque",
-                    DefaultSpeech = "eject",
-                    KodiApiMethod = KodiMethods.EjectOpticalDrive,
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_EJECT,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_EJECT,
                     ParameterRequired = false,
                 }
             },
+            {
+                HeyKodiCommandEnum.SystemShutdown,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SYSTEM_SHUTDOWN,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SYSTEM_SHUTDOWN,
+                    ParameterRequired = false,
+                }
+            },
+            {
+                HeyKodiCommandEnum.SystemReboot,
+                new CommandInfos()
+                {
+                    GetDescription = () => Resources.KODI_COMMAND_DESC_SYSTEM_RESTART,
+                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_SYSTEM_RESTART,
+                    ParameterRequired = false,
+                }
+            }
         };
 
-        public class CommandInfos
+        public class CommandInfos : HeyKodiConfigElementBase
         {
-            public string Description { get; set; }
+            public Func<string> GetDescription { get; set; }
+
+            public string Description { get => GetDescription == null ? null : GetDescription(); }
 
             public string DefaultSpeech { get; set; }
 
-            public string KodiApiMethod { get; set; }
-
             public bool ParameterRequired { get; set; }
 
-            public string ParameterQuestion { get; set; }
+            public Func<string> GetParameterQuestion { get; set; }
+
+            public string ParameterQuestion { get => GetParameterQuestion == null ? null : GetParameterQuestion(); }
 
             public override string ToString()
             {

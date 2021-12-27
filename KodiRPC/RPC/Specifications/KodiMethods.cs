@@ -24,14 +24,23 @@ namespace KodiRPC.RPC.Specifications
         public const string ExecuteAddon = "Addons.ExecuteAddon";
         public const string InputHome = "Input.Home";
         public const string InputBack = "Input.Back";
-
+        public const string InputSelect = "Input.Select";
+        public const string InputRight = "Input.Right";
+        public const string InputLeft = "Input.Left";
+        public const string InputUp = "Input.Up";
+        public const string InputDown = "Input.Down";
         public const string QuitApplication = "Application.Quit";
         public const string StopPlayer = "Player.Stop";
         public const string GetPlayers = "Player.GetPlayers";
         public const string GetActivePlayers = "Player.GetActivePlayers";
         public const string PlayPause = "Player.PlayPause";
+        public const string PlayerGoto = "Player.GoTo";
         public const string SetMute = "Application.SetMute";
+        public const string SetVolume = "Application.SetVolume";
         public const string EjectOpticalDrive = "System.EjectOpticalDrive";
+        public const string SystemShutdown = "System.Shutdown";
+        public const string SystemReboot = "System.Reboot";
+
 
 
         #region VideoLibrary

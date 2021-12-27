@@ -47,12 +47,12 @@ x Ajouter les nouvelles commandes, commande avec comme paramètre un pourcentage
 x Gérer la recherche youtube
 x Donner la possibilité de lancer des lignes de commandes (sélection de fichiers lancé via process.start())
 x Ajout / suppression de commandes d'applications
-x Shellcommands : permettre la saisie d'un paramètre vocal avec %%param%% dans les arguments
-x Localiser l'appli, donner le choix de la langue dans la config (en / fr)
 
+Localiser l'appli, donner le choix de la langue dans la config (en / fr)
 Il y a un gros souci dans la consolidation des commandes
-Désactiver le drag & drop dans la grille
 Compléter la doc et la traduire en anglais, modifier l'ouverture de doc
+Permetre l'édition de la ligne de commande
+Renommer applicationcommands en shellcommands, séparer l'exe et les arguments, permettre la saisie d'un paramètre vocal avec %%param%% dans les arguments
 Tester tester tester... (sur le médiacenter)
 Publier une release
 Parler de mon app sur le site kodi

@@ -118,226 +118,226 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CONFIGVIEW_ADD_SHELL_COMMAND" xml:space="preserve">
-    <value>Add</value>
+    <value>Ajouter</value>
   </data>
   <data name="CONFIGVIEW_SHELL_VOCAL_COMMANDS" xml:space="preserve">
-    <value>Voice commands for applications or files</value>
+    <value>Commandes vocales d'applications ou de fichiers</value>
   </data>
   <data name="CONFIGVIEW_AWAKE_HEYKODI" xml:space="preserve">
-    <value>Wake up Kodi with the following command:</value>
+    <value>Réveiller Kodi avec la commande suivante :</value>
   </data>
   <data name="CONFIGVIEW_COMMAND_LINE" xml:space="preserve">
-    <value>Command line</value>
+    <value>Ligne de commande</value>
   </data>
   <data name="CONFIGVIEW_DEBUG_MODE" xml:space="preserve">
-    <value>Debug mode</value>
+    <value>Mode debug</value>
   </data>
   <data name="CONFIGVIEW_DEL_SHELL_COMMAND" xml:space="preserve">
-    <value>Remove</value>
+    <value>Supprimer</value>
   </data>
   <data name="CONFIGVIEW_HOST" xml:space="preserve">
     <value>Host</value>
   </data>
   <data name="CONFIGVIEW_KODI_COMMAND" xml:space="preserve">
-    <value>Kodi Commands</value>
+    <value>Commande Kodi</value>
   </data>
   <data name="CONFIGVIEW_KODI_VOCAL_COMMANDS" xml:space="preserve">
-    <value>Kodi voice commands</value>
+    <value>Commandes vocales Kodi</value>
   </data>
   <data name="CONFIGVIEW_LANGUAGE" xml:space="preserve">
-    <value>Language of the interface</value>
+    <value>Langue de l'interface</value>
   </data>
   <data name="CONFIGVIEW_MINIMIZE_WHEN_PENDING" xml:space="preserve">
-    <value>Minimize Hey Kodi when on hold</value>
+    <value>Minimiser Hey Kodi lorsqu'il est en attente</value>
   </data>
   <data name="CONFIGVIEW_PASSWORD" xml:space="preserve">
-    <value>Password</value>
+    <value>Mot de passe</value>
   </data>
   <data name="CONFIGVIEW_PORT" xml:space="preserve">
     <value>Port</value>
   </data>
   <data name="CONFIGVIEW_RUN_AT_WINDOWS_START" xml:space="preserve">
-    <value>Launch Hey Kodi on Windows startup</value>
+    <value>Lancer Hey Kodi au démarrage de windows</value>
   </data>
   <data name="CONFIGVIEW_SHOW_DOCUMENTATION" xml:space="preserve">
-    <value>Show documentation</value>
+    <value>Afficher la documentation</value>
   </data>
   <data name="CONFIGVIEW_TITLE" xml:space="preserve">
-    <value>Hey Kodi configuration</value>
+    <value>Configuration de Hey Kodi</value>
   </data>
   <data name="CONFIGVIEW_USERNAME" xml:space="preserve">
-    <value>User name</value>
+    <value>Utilisateur</value>
   </data>
   <data name="CONFIGVIEW_USE_SPEECH_SYNTH" xml:space="preserve">
-    <value>Use text-to-speech to ask questions</value>
+    <value>Utiliser la synthèse vocale pour poser des question</value>
   </data>
   <data name="CONFIGVIEW_VOCAL_TEXT" xml:space="preserve">
-    <value>Voice text</value>
+    <value>Texte vocal</value>
   </data>
   <data name="CONFIGVIEW_VOLUME" xml:space="preserve">
     <value>Volume</value>
   </data>
   <data name="KODI_COMMAND_DESC_BACK" xml:space="preserve">
-    <value>Back</value>
+    <value>Retour en arrière</value>
   </data>
   <data name="KODI_COMMAND_DESC_CANCEL_HEYKODI_ACTIVATION" xml:space="preserve">
-    <value>Cancel Hey Kodi activation</value>
+    <value>Annuler l'activation de Hey Kodi</value>
   </data>
   <data name="KODI_COMMAND_DESC_DOWN" xml:space="preserve">
-    <value>Go down</value>
+    <value>En base</value>
   </data>
   <data name="KODI_COMMAND_DESC_EJECT" xml:space="preserve">
-    <value>Eject the disc</value>
+    <value>Ejecter le disque</value>
   </data>
   <data name="KODI_COMMAND_DESC_HOME" xml:space="preserve">
-    <value>Back to Home</value>
+    <value>Retour à l'accueil</value>
   </data>
   <data name="KODI_COMMAND_DESC_KODI_SEARCH" xml:space="preserve">
-    <value>Kodi search (globalsearch extension)</value>
+    <value>Recherche Kodi (extension globalsearch)</value>
   </data>
   <data name="KODI_COMMAND_DESC_LEFT" xml:space="preserve">
-    <value>Go to the left</value>
+    <value>Aller à gauche</value>
   </data>
   <data name="KODI_COMMAND_DESC_MUTE" xml:space="preserve">
     <value>Mute</value>
   </data>
   <data name="KODI_COMMAND_DESC_NEXT" xml:space="preserve">
-    <value>Next</value>
+    <value>Suivant</value>
   </data>
   <data name="KODI_COMMAND_DESC_PAUSE" xml:space="preserve">
-    <value>Pause playback</value>
+    <value>Mettre la lecture en pause</value>
   </data>
   <data name="KODI_COMMAND_DESC_PLAY" xml:space="preserve">
-    <value>Start playback</value>
+    <value>Lancer la lecture</value>
   </data>
   <data name="KODI_COMMAND_DESC_PREVIOUS" xml:space="preserve">
-    <value>Previous</value>
+    <value>Précédent</value>
   </data>
   <data name="KODI_COMMAND_DESC_QUIT" xml:space="preserve">
-    <value>Quit Kodi</value>
+    <value>Quitter Kodi</value>
   </data>
   <data name="KODI_COMMAND_DESC_SYSTEM_RESTART" xml:space="preserve">
-    <value>Restart the system</value>
+    <value>Relancer le système</value>
   </data>
   <data name="KODI_COMMAND_DESC_RIGHT" xml:space="preserve">
-    <value>Go to the right</value>
+    <value>Aller à droite</value>
   </data>
   <data name="KODI_COMMAND_DESC_SELECT" xml:space="preserve">
-    <value>Select</value>
+    <value>Sélection</value>
   </data>
   <data name="KODI_COMMAND_DESC_SHOWFAVOURITES" xml:space="preserve">
-    <value>Show favorites</value>
+    <value>Afficher les favoris</value>
   </data>
   <data name="KODI_COMMAND_DESC_SHOWGAMES" xml:space="preserve">
-    <value>Show games</value>
+    <value>Afficher les jeux</value>
   </data>
   <data name="KODI_COMMAND_DESC_SHOWWEATHER" xml:space="preserve">
-    <value>Show weather</value>
+    <value>Afficher la météo</value>
   </data>
   <data name="KODI_COMMAND_DESC_SHOWMUSIC" xml:space="preserve">
-    <value>Show music</value>
+    <value>Afficher la musique</value>
   </data>
   <data name="KODI_COMMAND_DESC_SHOWRADIOS" xml:space="preserve">
-    <value>Show radios</value>
+    <value>Afficher les radios</value>
   </data>
   <data name="KODI_COMMAND_DESC_SHOWTV" xml:space="preserve">
-    <value>Show TV channels</value>
+    <value>Afficher les chaînes de télévision</value>
   </data>
   <data name="KODI_COMMAND_DESC_SHOWVIDEOS" xml:space="preserve">
-    <value>Show Videos</value>
+    <value>Afficher les vidéos</value>
   </data>
   <data name="KODI_COMMAND_DESC_SHOW_HEYKODI_CONFIG" xml:space="preserve">
-    <value>Show Hey Kodi configuration</value>
+    <value>Affichage de la configuration de Hey Kodi</value>
   </data>
   <data name="KODI_COMMAND_DESC_SYSTEM_SHUTDOWN" xml:space="preserve">
-    <value>Shutdown the system</value>
+    <value>Arrêter le système</value>
   </data>
   <data name="KODI_COMMAND_DESC_STOP" xml:space="preserve">
-    <value>Stop playback</value>
+    <value>Arrêt de la lecture</value>
   </data>
   <data name="KODI_COMMAND_DESC_UP" xml:space="preserve">
-    <value>Go up</value>
+    <value>Aller en haut</value>
   </data>
   <data name="KODI_COMMAND_DESC_VOLUME" xml:space="preserve">
-    <value>Change the sound volume (10% to 100%)</value>
+    <value>Changer le volume sonore (10% à 100%)</value>
   </data>
   <data name="KODI_COMMAND_DESC_YOUTUBE_SEARCH" xml:space="preserve">
-    <value>Youtube search (youtube extension)</value>
+    <value>Recherche youtube (extension youtube)</value>
   </data>
   <data name="MAINVIEWMODEL_SHELL_COMMAND_EXE_FAILED" xml:space="preserve">
-    <value>The execution of the application command failed.</value>
+    <value>L'exécution de la commande d'application a échoué.</value>
   </data>
   <data name="MAINVIEWMODEL_BAD_VOLUME_VALUE" xml:space="preserve">
-    <value>'{0}' is not a valid volume value.</value>
+    <value>'{0}' n'est pas une valeur de volume valide.</value>
   </data>
   <data name="MAINVIEWMODEL_GET_MEDIA_GRAMAR_FAILED" xml:space="preserve">
-    <value>Unable to retrieve the titles of movies / music present in Kodi.</value>
+    <value>Impossible de récupérer les titres des films / musiques présents dans Kodi.</value>
   </data>
   <data name="MAINVIEWMODEL_KODI_COMMAND_EXE_FAILED" xml:space="preserve">
-    <value>The execution of the Kodi command failed.</value>
+    <value>L'exécution de la commande Kodi a échoué.</value>
   </data>
   <data name="MAINVIEW_COMMAND" xml:space="preserve">
-    <value>Command :</value>
+    <value>Commande :</value>
   </data>
   <data name="MAINVIEW_CONFIGURATION" xml:space="preserve">
     <value>Configuration</value>
   </data>
   <data name="MAINVIEW_MINIMIZE" xml:space="preserve">
-    <value>Minimize</value>
+    <value>Réduire</value>
   </data>
   <data name="MAINVIEW_NATIVETEXT" xml:space="preserve">
-    <value>Native text:</value>
+    <value>Text natif :</value>
   </data>
   <data name="MAINVIEW_QUIT" xml:space="preserve">
-    <value>Quit</value>
+    <value>Quitter</value>
   </data>
   <data name="MAINVIEW_STATE" xml:space="preserve">
-    <value>State :</value>
+    <value>Etat :</value>
   </data>
   <data name="MAINVIEW_USTEXT" xml:space="preserve">
-    <value>US Text:</value>
+    <value>Text US :</value>
   </data>
   <data name="MISC_CRITICAL_ERROR" xml:space="preserve">
-    <value>A critical error occurred while initializing Hey Kodi, the app will close.</value>
+    <value>Une erreur critique s'est produite lors de l'initialisation de Hey Kodi, l'application va se fermer.</value>
   </data>
   <data name="CONFIGVIEW_COMMAND_ARGS" xml:space="preserve">
     <value>Arguments</value>
   </data>
   <data name="ERROR_NO_MIC_INPUT" xml:space="preserve">
-    <value>Unable to link voice recognition to a valid sound input (there is probably no microphone input on this system).</value>
+    <value>Impossible de lier la reconnaissance vocale à une entrée son valide (il n'y a probablement pas d'entrée micro sur ce système).</value>
   </data>
   <data name="ERROR_NO_VOCAL_RECO" xml:space="preserve">
-    <value>Speech recognition is not installed on this computer.</value>
+    <value>La reconnaissance vocale n'est pas installée sur cet ordinateur</value>
   </data>
   <data name="ERROR_NO_VOCAL_RECO_FOR_CULTURE" xml:space="preserve">
-    <value>Speech recognition is not installed for the computer language ({0}).</value>
+    <value>La reconnaissance vocale n'est pas installée pour la langue de l'ordinateur ({0})</value>
   </data>
   <data name="ERROR_UNKNOWN_COMMAND" xml:space="preserve">
-    <value>Unknown command: {0}.</value>
+    <value>Unknown command : {0}</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_BACK" xml:space="preserve">
-    <value>back</value>
+    <value>retour</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_CONFIGURATION" xml:space="preserve">
     <value>configuration</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_DOWN" xml:space="preserve">
-    <value>bottom</value>
+    <value>en bas</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_EJECT" xml:space="preserve">
-    <value>eject</value>
+    <value>éjecter</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_HOME" xml:space="preserve">
-    <value>home</value>
+    <value>accueil</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_LEFT" xml:space="preserve">
-    <value>right</value>
+    <value>à gauche</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_MUTE" xml:space="preserve">
-    <value>mute</value>
+    <value>mioute</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_NEXT" xml:space="preserve">
-    <value>next</value>
+    <value>suivant</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_PAUSE" xml:space="preserve">
     <value>pause</value>
@@ -346,52 +346,52 @@
     <value>play</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_PREVIOUS" xml:space="preserve">
-    <value>previous</value>
+    <value>précédent</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_QUIT" xml:space="preserve">
-    <value>quit</value>
+    <value>quitter</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_RIGHT" xml:space="preserve">
-    <value>right</value>
+    <value>à droite</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SEARCH" xml:space="preserve">
-    <value>search</value>
+    <value>recherche</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SELECT" xml:space="preserve">
-    <value>select</value>
+    <value>sélection</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SHOWFAVOURITES" xml:space="preserve">
-    <value>favourite</value>
+    <value>favori</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SHOWGAMES" xml:space="preserve">
-    <value>video games</value>
+    <value>jeu vidéo</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SHOWMUSIC" xml:space="preserve">
-    <value>music</value>
+    <value>musique</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SHOWRADIOS" xml:space="preserve">
     <value>radio</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SHOWTV" xml:space="preserve">
-    <value>television</value>
+    <value>télévision</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SHOWVIDEOS" xml:space="preserve">
-    <value>video</value>
+    <value>vidéo</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SHOWWEATHER" xml:space="preserve">
-    <value>weather</value>
+    <value>météo</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_STOP" xml:space="preserve">
     <value>stop</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SYSTEM_RESTART" xml:space="preserve">
-    <value>restart</value>
+    <value>redémarrer</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_SYSTEM_SHUTDOWN" xml:space="preserve">
-    <value>shutdown</value>
+    <value>éteindre</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_UP" xml:space="preserve">
-    <value>up</value>
+    <value>en haut</value>
   </data>
   <data name="KODI_COMMAND_SPEECH_VOLUME" xml:space="preserve">
     <value>volume</value>
@@ -400,9 +400,9 @@
     <value>youtube</value>
   </data>
   <data name="KODY_COMMAND_QUESTION_SEARCH" xml:space="preserve">
-    <value>What should I look for?</value>
+    <value>Que dois-je rechercher ?</value>
   </data>
   <data name="KODY_COMMAND_QUESTION_VOLUME" xml:space="preserve">
-    <value>What volume level do you want?</value>
+    <value>Quel niveau de volume souhaitez-vous ?</value>
   </data>
 </root>

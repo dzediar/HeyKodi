@@ -1,19 +1,5 @@
-﻿using HeyKodi.Model;
-using HeyKodi.ViewModels;
-using HeyKodi.Views;
-using KodiRPC.RPC.RequestResponse.Params.VideoLibrary;
-using KodiRPC.RPC.Specifications;
-using KodiRPC.Services;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Speech.Recognition;
-using System.Speech.Recognition.SrgsGrammar;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using zComp.Wpf;
 
 namespace HeyKodi
@@ -29,7 +15,7 @@ namespace HeyKodi
         }
 
         private Point thumbOrigin;
-        private Point balloonOrigin;
+        private Point windowOrigin;
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
@@ -42,8 +28,8 @@ namespace HeyKodi
                 double deltaY = loc.Y - thumbOrigin.Y;
                 if (deltaX != 0 || deltaY != 0)
                 {
-                    this.Left = balloonOrigin.X + deltaX;
-                    this.Top = balloonOrigin.Y + deltaY;
+                    this.Left = windowOrigin.X + deltaX;
+                    this.Top = windowOrigin.Y + deltaY;
                 }
             }
         }
@@ -53,7 +39,7 @@ namespace HeyKodi
             base.OnMouseLeftButtonDown(e);
 
             Point pos = e.GetPosition(this);
-            balloonOrigin = new Point(this.Left, this.Top);
+            windowOrigin = new Point(this.Left, this.Top);
             thumbOrigin = this.PointToScreen(pos);
             thumbOrigin = this.PointToScreen(pos);
             this.CaptureMouse();

@@ -22,7 +22,7 @@ namespace HeyKodi.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace HeyKodi.Properties {
         ///   Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HeyKodi.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,876 @@ namespace HeyKodi.Properties {
         ///   les recherches de ressources à l'aide de cette classe de ressource fortement typée.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Add.
+        /// </summary>
+        public static string CONFIGVIEW_ADD_SHELL_COMMAND {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_ADD_SHELL_COMMAND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Wake up Kodi with the following command:.
+        /// </summary>
+        public static string CONFIGVIEW_AWAKE_HEYKODI {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_AWAKE_HEYKODI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Arguments.
+        /// </summary>
+        public static string CONFIGVIEW_COMMAND_ARGS {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_COMMAND_ARGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Command line.
+        /// </summary>
+        public static string CONFIGVIEW_COMMAND_LINE {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_COMMAND_LINE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Debug mode.
+        /// </summary>
+        public static string CONFIGVIEW_DEBUG_MODE {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_DEBUG_MODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Remove.
+        /// </summary>
+        public static string CONFIGVIEW_DEL_SHELL_COMMAND {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_DEL_SHELL_COMMAND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Host.
+        /// </summary>
+        public static string CONFIGVIEW_HOST {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_HOST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Kodi Commands.
+        /// </summary>
+        public static string CONFIGVIEW_KODI_COMMAND {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_KODI_COMMAND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Kodi voice commands.
+        /// </summary>
+        public static string CONFIGVIEW_KODI_VOCAL_COMMANDS {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_KODI_VOCAL_COMMANDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Language of the interface.
+        /// </summary>
+        public static string CONFIGVIEW_LANGUAGE {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_LANGUAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Minimize Hey Kodi when on hold.
+        /// </summary>
+        public static string CONFIGVIEW_MINIMIZE_WHEN_PENDING {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_MINIMIZE_WHEN_PENDING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Password.
+        /// </summary>
+        public static string CONFIGVIEW_PASSWORD {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Port.
+        /// </summary>
+        public static string CONFIGVIEW_PORT {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_PORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Launch Hey Kodi on Windows startup.
+        /// </summary>
+        public static string CONFIGVIEW_RUN_AT_WINDOWS_START {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_RUN_AT_WINDOWS_START", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Voice commands for applications or files.
+        /// </summary>
+        public static string CONFIGVIEW_SHELL_VOCAL_COMMANDS {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_SHELL_VOCAL_COMMANDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Show documentation.
+        /// </summary>
+        public static string CONFIGVIEW_SHOW_DOCUMENTATION {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_SHOW_DOCUMENTATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Hey Kodi configuration.
+        /// </summary>
+        public static string CONFIGVIEW_TITLE {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Use text-to-speech to ask questions.
+        /// </summary>
+        public static string CONFIGVIEW_USE_SPEECH_SYNTH {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_USE_SPEECH_SYNTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à User name.
+        /// </summary>
+        public static string CONFIGVIEW_USERNAME {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_USERNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Voice text.
+        /// </summary>
+        public static string CONFIGVIEW_VOCAL_TEXT {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_VOCAL_TEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Volume.
+        /// </summary>
+        public static string CONFIGVIEW_VOLUME {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_VOLUME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unable to link voice recognition to a valid sound input (there is probably no microphone input on this system)..
+        /// </summary>
+        public static string ERROR_NO_MIC_INPUT {
+            get {
+                return ResourceManager.GetString("ERROR_NO_MIC_INPUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Speech recognition is not installed on this computer..
+        /// </summary>
+        public static string ERROR_NO_VOCAL_RECO {
+            get {
+                return ResourceManager.GetString("ERROR_NO_VOCAL_RECO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Speech recognition is not installed for the computer language ({0})..
+        /// </summary>
+        public static string ERROR_NO_VOCAL_RECO_FOR_CULTURE {
+            get {
+                return ResourceManager.GetString("ERROR_NO_VOCAL_RECO_FOR_CULTURE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unknown command: {0}..
+        /// </summary>
+        public static string ERROR_UNKNOWN_COMMAND {
+            get {
+                return ResourceManager.GetString("ERROR_UNKNOWN_COMMAND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Back.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_BACK {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_BACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Cancel Hey Kodi activation.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_CANCEL_HEYKODI_ACTIVATION {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_CANCEL_HEYKODI_ACTIVATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Go down.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_DOWN {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_DOWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Eject the disc.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_EJECT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_EJECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Back to Home.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_HOME {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_HOME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Kodi search (globalsearch extension).
+        /// </summary>
+        public static string KODI_COMMAND_DESC_KODI_SEARCH {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_KODI_SEARCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Go to the left.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_LEFT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_LEFT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Mute.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_MUTE {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_MUTE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Next.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_NEXT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_NEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pause playback.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_PAUSE {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_PAUSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Start playback.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_PLAY {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_PLAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Previous.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_PREVIOUS {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_PREVIOUS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Quit Kodi.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_QUIT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_QUIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Go to the right.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_RIGHT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_RIGHT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Select.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SELECT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SELECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Show Hey Kodi configuration.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SHOW_HEYKODI_CONFIG {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SHOW_HEYKODI_CONFIG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Show favorites.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SHOWFAVOURITES {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SHOWFAVOURITES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Show games.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SHOWGAMES {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SHOWGAMES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Show music.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SHOWMUSIC {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SHOWMUSIC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Show radios.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SHOWRADIOS {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SHOWRADIOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Show TV channels.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SHOWTV {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SHOWTV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Show Videos.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SHOWVIDEOS {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SHOWVIDEOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Show weather.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SHOWWEATHER {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SHOWWEATHER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Stop playback.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_STOP {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_STOP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Restart the system.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SYSTEM_RESTART {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SYSTEM_RESTART", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Shutdown the system.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_SYSTEM_SHUTDOWN {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_SYSTEM_SHUTDOWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Go up.
+        /// </summary>
+        public static string KODI_COMMAND_DESC_UP {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_UP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Change the sound volume (10% to 100%).
+        /// </summary>
+        public static string KODI_COMMAND_DESC_VOLUME {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_VOLUME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Youtube search (youtube extension).
+        /// </summary>
+        public static string KODI_COMMAND_DESC_YOUTUBE_SEARCH {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_DESC_YOUTUBE_SEARCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à back.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_BACK {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_BACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à configuration.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_CONFIGURATION {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_CONFIGURATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à bottom.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_DOWN {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_DOWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à eject.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_EJECT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_EJECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à home.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_HOME {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_HOME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à right.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_LEFT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_LEFT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à mute.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_MUTE {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_MUTE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à next.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_NEXT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_NEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à pause.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_PAUSE {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_PAUSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à play.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_PLAY {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_PLAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à previous.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_PREVIOUS {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_PREVIOUS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à quit.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_QUIT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_QUIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à right.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_RIGHT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_RIGHT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à search.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SEARCH {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SEARCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à select.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SELECT {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SELECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à favourite.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SHOWFAVOURITES {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SHOWFAVOURITES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à video games.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SHOWGAMES {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SHOWGAMES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à music.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SHOWMUSIC {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SHOWMUSIC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à radio.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SHOWRADIOS {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SHOWRADIOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à television.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SHOWTV {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SHOWTV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à video.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SHOWVIDEOS {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SHOWVIDEOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à weather.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SHOWWEATHER {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SHOWWEATHER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à stop.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_STOP {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_STOP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à restart.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SYSTEM_RESTART {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SYSTEM_RESTART", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à shutdown.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_SYSTEM_SHUTDOWN {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_SYSTEM_SHUTDOWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à up.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_UP {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_UP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à volume.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_VOLUME {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_VOLUME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à youtube.
+        /// </summary>
+        public static string KODI_COMMAND_SPEECH_YOUTUBE {
+            get {
+                return ResourceManager.GetString("KODI_COMMAND_SPEECH_YOUTUBE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à What should I look for?.
+        /// </summary>
+        public static string KODY_COMMAND_QUESTION_SEARCH {
+            get {
+                return ResourceManager.GetString("KODY_COMMAND_QUESTION_SEARCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à What volume level do you want?.
+        /// </summary>
+        public static string KODY_COMMAND_QUESTION_VOLUME {
+            get {
+                return ResourceManager.GetString("KODY_COMMAND_QUESTION_VOLUME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Command :.
+        /// </summary>
+        public static string MAINVIEW_COMMAND {
+            get {
+                return ResourceManager.GetString("MAINVIEW_COMMAND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Configuration.
+        /// </summary>
+        public static string MAINVIEW_CONFIGURATION {
+            get {
+                return ResourceManager.GetString("MAINVIEW_CONFIGURATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Minimize.
+        /// </summary>
+        public static string MAINVIEW_MINIMIZE {
+            get {
+                return ResourceManager.GetString("MAINVIEW_MINIMIZE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Native text:.
+        /// </summary>
+        public static string MAINVIEW_NATIVETEXT {
+            get {
+                return ResourceManager.GetString("MAINVIEW_NATIVETEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Quit.
+        /// </summary>
+        public static string MAINVIEW_QUIT {
+            get {
+                return ResourceManager.GetString("MAINVIEW_QUIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à State :.
+        /// </summary>
+        public static string MAINVIEW_STATE {
+            get {
+                return ResourceManager.GetString("MAINVIEW_STATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à US Text:.
+        /// </summary>
+        public static string MAINVIEW_USTEXT {
+            get {
+                return ResourceManager.GetString("MAINVIEW_USTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à &apos;{0}&apos; is not a valid volume value..
+        /// </summary>
+        public static string MAINVIEWMODEL_BAD_VOLUME_VALUE {
+            get {
+                return ResourceManager.GetString("MAINVIEWMODEL_BAD_VOLUME_VALUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unable to retrieve the titles of movies / music present in Kodi..
+        /// </summary>
+        public static string MAINVIEWMODEL_GET_MEDIA_GRAMAR_FAILED {
+            get {
+                return ResourceManager.GetString("MAINVIEWMODEL_GET_MEDIA_GRAMAR_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à The execution of the Kodi command failed..
+        /// </summary>
+        public static string MAINVIEWMODEL_KODI_COMMAND_EXE_FAILED {
+            get {
+                return ResourceManager.GetString("MAINVIEWMODEL_KODI_COMMAND_EXE_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à The execution of the application command failed..
+        /// </summary>
+        public static string MAINVIEWMODEL_SHELL_COMMAND_EXE_FAILED {
+            get {
+                return ResourceManager.GetString("MAINVIEWMODEL_SHELL_COMMAND_EXE_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à A critical error occurred while initializing Hey Kodi, the app will close..
+        /// </summary>
+        public static string MISC_CRITICAL_ERROR {
+            get {
+                return ResourceManager.GetString("MISC_CRITICAL_ERROR", resourceCulture);
             }
         }
     }

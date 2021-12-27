@@ -291,12 +291,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4D084F458BC338B5CC4BA2E8DF3BC87A"
-        "OwnerKey" = "8:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4EB9D94EE63DD1A01D3FEF89B246304B"
         "OwnerKey" = "8:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
         "MsmSig" = "8:_UNDEFINED"
@@ -525,6 +519,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A7B292114ACCDE8A96EE84F2D4862AE1"
+        "OwnerKey" = "8:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_AD90A8C9D1301B082C26C16C2CDD1186"
         "OwnerKey" = "8:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
         "MsmSig" = "8:_UNDEFINED"
@@ -568,7 +568,7 @@
         "Entry"
         {
         "MsmKey" = "8:_B9E5A5A896D805E5C2CB4C56B4A111D1"
-        "OwnerKey" = "8:_4D084F458BC338B5CC4BA2E8DF3BC87A"
+        "OwnerKey" = "8:_A7B292114ACCDE8A96EE84F2D4862AE1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -617,6 +617,12 @@
         {
         "MsmKey" = "8:_BCD13EC346DFE3797CC80E644A053899"
         "OwnerKey" = "8:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BDCC6114CCC94A829F35726EF38761F2"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -855,14 +861,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F5E4CE266A6643D83871B96B92A3073F"
-        "OwnerKey" = "8:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
+        "MsmKey" = "8:_F566BA4D64AE42D39C19F86F537685E9"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F6D0B06032BD49D8816E57771984B015"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_F5E4CE266A6643D83871B96B92A3073F"
+        "OwnerKey" = "8:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -934,18 +940,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4D084F458BC338B5CC4BA2E8DF3BC87A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_145CECBC58F7759C1BDF596841A363D4"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -977,6 +971,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_0011868B66E081E77CC075FE7737CB02"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A7B292114ACCDE8A96EE84F2D4862AE1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1649,6 +1649,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_854F5DBCCB886A7DCF18C8340880F3D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -3067,37 +3073,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4D084F458BC338B5CC4BA2E8DF3BC87A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:KodiRPC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_4D084F458BC338B5CC4BA2E8DF3BC87A"
-                    {
-                    "Name" = "8:KodiRPC.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:KodiRPC.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_CDB7D89DBEFF4D53BAE34CC04528EF7A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4EB9D94EE63DD1A01D3FEF89B246304B"
             {
             "AssemblyRegister" = "3:1"
@@ -4183,6 +4158,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A7B292114ACCDE8A96EE84F2D4862AE1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:KodiRPC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A7B292114ACCDE8A96EE84F2D4862AE1"
+                    {
+                    "Name" = "8:KodiRPC.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:KodiRPC.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CDB7D89DBEFF4D53BAE34CC04528EF7A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AD90A8C9D1301B082C26C16C2CDD1186"
             {
             "AssemblyRegister" = "3:1"
@@ -4584,6 +4590,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BDCC6114CCC94A829F35726EF38761F2"
+            {
+            "SourcePath" = "8:..\\HeyKodi\\HeyKodi.EN.pdf"
+            "TargetName" = "8:HeyKodi.EN.pdf"
+            "Tag" = "8:"
+            "Folder" = "8:_CDB7D89DBEFF4D53BAE34CC04528EF7A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BE74508834C13AFDD68B8D90F7F7CD87"
@@ -5609,6 +5635,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F566BA4D64AE42D39C19F86F537685E9"
+            {
+            "SourcePath" = "8:..\\HeyKodi\\HeyKodi.FR.pdf"
+            "TargetName" = "8:HeyKodi.FR.pdf"
+            "Tag" = "8:"
+            "Folder" = "8:_CDB7D89DBEFF4D53BAE34CC04528EF7A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F5E4CE266A6643D83871B96B92A3073F"
             {
             "AssemblyRegister" = "3:1"
@@ -5638,26 +5684,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F6D0B06032BD49D8816E57771984B015"
-            {
-            "SourcePath" = "8:..\\HeyKodi\\HeyKodi.pdf"
-            "TargetName" = "8:HeyKodi.pdf"
-            "Tag" = "8:"
-            "Folder" = "8:_CDB7D89DBEFF4D53BAE34CC04528EF7A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F7687DCC73C8139DEF0E7B43C0268940"
@@ -6545,7 +6571,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_3CC5ACC7C0684FBF8E2FCF83AED1AD68"
             {
-            "SourcePath" = "8:..\\HeyKodi\\obj\\Release\\HeyKodi.exe"
+            "SourcePath" = "8:..\\HeyKodi\\obj\\Debug\\HeyKodi.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CDB7D89DBEFF4D53BAE34CC04528EF7A"

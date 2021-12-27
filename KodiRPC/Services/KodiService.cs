@@ -69,7 +69,7 @@ namespace KodiRPC.Services
             return _rpcConnector.MakeRequest<string>(KodiMethods.Scan, parameters, requestId);
         }
 
-        public JsonRpcResponse<string> ActivateWindow(ActivateWindowParams parameters, string requestId = "VideoLibrary.Scan")
+        public JsonRpcResponse<string> ActivateWindow(ActivateWindowParams parameters, string requestId = KodiMethods.ActivateWindow)
         {
             return _rpcConnector.MakeRequest<string>(KodiMethods.ActivateWindow, parameters, requestId);
         }
@@ -82,7 +82,17 @@ namespace KodiRPC.Services
         public JsonRpcResponse<string> EjectOpticalDrive(EjectOpticalDriveParams parameters, string requestId = KodiMethods.EjectOpticalDrive)
         {
             return _rpcConnector.MakeRequest<string>(KodiMethods.EjectOpticalDrive, parameters, requestId);
-        }       
+        }
+
+        public JsonRpcResponse<string> SystemShutdown(string requestId = KodiMethods.SystemShutdown)
+        {
+            return _rpcConnector.MakeRequest<string>(KodiMethods.SystemShutdown, new EjectOpticalDriveParams(), requestId);
+        }
+
+        public JsonRpcResponse<string> SystemReboot(string requestId = KodiMethods.SystemReboot)
+        {
+            return _rpcConnector.MakeRequest<string>(KodiMethods.SystemReboot, new EjectOpticalDriveParams(), requestId);
+        }
 
         public JsonRpcResponse<string> ExecuteAddon(ExecuteAddonParams parameters, string requestId = "Addons.ExecuteAddon")
         {
@@ -104,11 +114,21 @@ namespace KodiRPC.Services
             return _rpcConnector.MakeRequest<PlayerSpeed>(KodiMethods.PlayPause, parameters, requestId);
         }
 
+        public JsonRpcResponse<string> PlayerGoto(PlayerGotoParams parameters, string requestId = KodiMethods.PlayerGoto)
+        {
+            return _rpcConnector.MakeRequest<string>(KodiMethods.PlayerGoto, parameters, requestId);
+        }
+
         public JsonRpcResponse<string> SetMute(SetMuteParams parameters, string requestId = KodiMethods.SetMute)
         {
             return _rpcConnector.MakeRequest<string>(KodiMethods.SetMute, parameters, requestId);
         }
-        
+
+        public JsonRpcResponse<string> SetVolume(SetVolumeParams parameters, string requestId = KodiMethods.SetVolume)
+        {
+            return _rpcConnector.MakeRequest<string>(KodiMethods.SetVolume, parameters, requestId);
+        }
+
         public JsonRpcResponse<string> InputHome(string requestId = "Input.Home")
         {
             return _rpcConnector.MakeRequest<string>(KodiMethods.InputHome, new InputHomeParams(), requestId);
@@ -117,6 +137,31 @@ namespace KodiRPC.Services
         public JsonRpcResponse<string> InputBack(string requestId = "Input.Back")
         {
             return _rpcConnector.MakeRequest<string>(KodiMethods.InputBack, new InputHomeParams(), requestId);
+        }
+
+        public JsonRpcResponse<string> InputSelect(string requestId = KodiMethods.InputSelect)
+        {
+            return _rpcConnector.MakeRequest<string>(KodiMethods.InputSelect, new InputHomeParams(), requestId);
+        }
+
+        public JsonRpcResponse<string> InputRight(string requestId = KodiMethods.InputRight)
+        {
+            return _rpcConnector.MakeRequest<string>(KodiMethods.InputRight, new InputHomeParams(), requestId);
+        }
+
+        public JsonRpcResponse<string> InputLeft(string requestId = KodiMethods.InputLeft)
+        {
+            return _rpcConnector.MakeRequest<string>(KodiMethods.InputLeft, new InputHomeParams(), requestId);
+        }
+
+        public JsonRpcResponse<string> InputUp(string requestId = KodiMethods.InputUp)
+        {
+            return _rpcConnector.MakeRequest<string>(KodiMethods.InputUp, new InputHomeParams(), requestId);
+        }
+
+        public JsonRpcResponse<string> InputDown(string requestId = KodiMethods.InputDown)
+        {
+            return _rpcConnector.MakeRequest<string>(KodiMethods.InputDown, new InputHomeParams(), requestId);
         }
 
         public JsonRpcResponse<string> QuitApplication(string requestId = KodiMethods.QuitApplication)

@@ -54,11 +54,6 @@ namespace HeyKodi.Views
             this.MainViewModel = MainViewModel.Instance;
 
             this.MainViewModel.Init();
-
-            if (MainViewModel.SpeechSynthesizer != null)
-            {
-                MainViewModel.SpeechSynthesizer.SpeakCompleted += SpeechSynthesizer_SpeakCompleted;
-            }
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -159,7 +154,7 @@ namespace HeyKodi.Views
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Information, "Configuration de Hey Kodi", ConfigView.Instance, zSpeechBalloonButtonsType.Ok);
+                        zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Information, HeyKodi.Properties.Resources.CONFIGVIEW_TITLE, ConfigView.Instance, zSpeechBalloonButtonsType.Ok);
                     });
                 }
             );
@@ -197,11 +192,6 @@ namespace HeyKodi.Views
         }
 
         private void player_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            MainViewModel.KodiSpeechRecognizer.RecognizeAsync();
-        }
-
-        private void SpeechSynthesizer_SpeakCompleted(object sender, System.Speech.Synthesis.SpeakCompletedEventArgs e)
         {
             MainViewModel.KodiSpeechRecognizer.RecognizeAsync();
         }

@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:local="clr-namespace:HeyKodi.Views"
+             xmlns:tools="clr-namespace:HeyKodi.Tools"             
+             xmlns:properties="clr-namespace:HeyKodi.Properties"             
              xmlns:zw="clr-namespace:zComp.Wpf;assembly=zComp.Wpf"
              xmlns:zwconv="clr-namespace:zComp.Wpf.Converters;assembly=zComp.Wpf"
              xmlns:zwbehav="clr-namespace:zComp.Wpf.Behaviors;assembly=zComp.Wpf"
+             
              mc:Ignorable="d"
              Width="400"
              Height="Auto">
@@ -157,17 +160,23 @@
                 </zw:zStackPanel>
                 <zw:zStackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" >
                     <zw:zButton x:Name="btSettings" Style="{StaticResource {x:Static zw:zCompRepository.EmptyButtonStyleKey}}" 
-                                Background="Transparent" Padding="0" ToolTip="Configuration" Command="{Binding ShowConfigurationCommand, Mode=OneWay}">
+                                Background="Transparent" Padding="0"
+                                ToolTip="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=MAINVIEW_CONFIGURATION}" 
+                                Command="{Binding ShowConfigurationCommand, Mode=OneWay}">
                         <Image Source="pack://application:,,,/HeyKodi;component/Images/settings.png" Grid.Row="1" 
                             VerticalAlignment="Center" Width="24" Height="24" Stretch="Uniform" />
                     </zw:zButton>
                     <zw:zButton x:Name="btMinimize" Style="{StaticResource {x:Static zw:zCompRepository.EmptyButtonStyleKey}}" 
-                                Background="Transparent" Padding="0" Margin="4,0,0,0" ToolTip="Réduire" Command="{Binding MinimizeCommand, Mode=OneWay}">
+                                Background="Transparent" Padding="0" Margin="4,0,0,0" 
+                                ToolTip="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=MAINVIEW_MINIMIZE}" 
+                                Command="{Binding MinimizeCommand, Mode=OneWay}">
                         <Image Source="pack://application:,,,/HeyKodi;component/Images/minimize.png" Grid.Row="1" 
                             VerticalAlignment="Center" Width="24" Height="24" Stretch="Uniform" />
                     </zw:zButton>
                     <zw:zButton x:Name="btClose" Style="{StaticResource {x:Static zw:zCompRepository.EmptyButtonStyleKey}}" 
-                                Background="Transparent" Padding="0" ToolTip="Quitter" Click="btClose_Click">
+                                Background="Transparent" Padding="0" 
+                                ToolTip="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=MAINVIEW_QUIT}"
+                                Click="btClose_Click">
                         <Image Source="pack://application:,,,/HeyKodi;component/Images/logout.png" Grid.Row="1" 
                             VerticalAlignment="Center" Width="32" Height="32" Stretch="Uniform" Margin="0,-2,0,0" />
                     </zw:zButton>
@@ -220,31 +229,24 @@
 				<zw:zLabel Style="{StaticResource IsBusyLabelStyle}"/>
 			</zw:zGrid>
 
-
 			<zw:zStackPanel Grid.Row="4" Orientation="Vertical" Margin="4,0,4,4"
                             Background="{StaticResource {x:Static zw:zCompColors.ContainerControlBackgroundBrushKey}}"
                             Visibility="{Binding HeyKodiConfig.DebugMode, Mode=OneWay, Converter={x:Static zwconv:zBoolToVisibilityConverter.Instance}}">
                 <zw:zStackPanel Orientation="Horizontal">
-                    <zw:zTextBlock Text="Etat :"/>
+                    <zw:zTextBlock Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=MAINVIEW_STATE}"/>
                     <zw:zTextBlock Text="{Binding KodiSpeechRecognizer.State, Mode=OneWay}"/>
                 </zw:zStackPanel>
                 <zw:zStackPanel Orientation="Horizontal">
-                    <zw:zTextBlock Text="Text natif :"/>
+                    <zw:zTextBlock Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=MAINVIEW_NATIVETEXT}"/> 
                     <zw:zTextBlock Text="{Binding KodiSpeechRecognizer.NativeSpeech, Mode=OneWay}"/>
                 </zw:zStackPanel>
                 <zw:zStackPanel Orientation="Horizontal">
-                    <zw:zTextBlock Text="Text US :"/>
+                    <zw:zTextBlock Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=MAINVIEW_USTEXT}"/> 
                     <zw:zTextBlock Text="{Binding KodiSpeechRecognizer.UsSpeech, Mode=OneWay}"/>
                 </zw:zStackPanel>
-                <!--
                 <zw:zStackPanel Orientation="Horizontal">
-                    <zw:zTextBlock Text="Paramètre :"/>
-                    <zw:zTextBlock Text="{Binding KodiSpeechRecognizer.RealSpeech, Mode=OneWay}"/>
-                </zw:zStackPanel>
-                -->
-                <zw:zStackPanel Orientation="Horizontal">
-                    <zw:zTextBlock Text="Commande :"/>
-                    <zw:zTextBlock Text="{Binding KodiSpeechRecognizer.LastKodiCommand, Mode=OneWay}"/>
+                    <zw:zTextBlock Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=MAINVIEW_COMMAND}"/> 
+                    <zw:zTextBlock Text="{Binding KodiSpeechRecognizer.LastExecutedCommand, Mode=OneWay}"/>
                 </zw:zStackPanel>                
             </zw:zStackPanel>
         </Grid>

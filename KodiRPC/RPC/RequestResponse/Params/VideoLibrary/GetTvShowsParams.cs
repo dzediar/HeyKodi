@@ -63,6 +63,15 @@ namespace KodiRPC.RPC.RequestResponse.Params.VideoLibrary
         public int PlayerId { get; set; }
     }
 
+    public class PlayerGotoParams : KodiProperties
+    {
+        [JsonProperty("playerid", Required = Required.Always)]
+        public int PlayerId { get; set; }
+
+        [JsonProperty("to", Required = Required.Always)]
+        public string To { get; set; }
+    }
+
     public class TogglePlayPauseParams : KodiProperties
     {
         [JsonProperty("playerid", Required = Required.Always)]
@@ -73,6 +82,12 @@ namespace KodiRPC.RPC.RequestResponse.Params.VideoLibrary
     {
         [JsonProperty("mute", Required = Required.Always)]
         public string Mute { get; set; } = "toggle";
+    }
+
+    public class SetVolumeParams : KodiProperties
+    {
+        [JsonProperty("volume", Required = Required.Always)]
+        public int Volume { get; set; }
     }
 
     public class EjectOpticalDriveParams : KodiProperties
