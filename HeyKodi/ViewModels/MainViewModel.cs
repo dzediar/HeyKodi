@@ -221,14 +221,14 @@ namespace HeyKodi.ViewModels
                                 Params = new string[] { "searchstring=" + parameter }
                             });
                             break;
-                        case HeyKodiCommandEnum.Youtube:
-                            KodiService.ExecuteAddon(new ExecuteAddonParams()
-                            {
-                                AddonId = "plugin.video.youtube",
-                                Wait = false,
-                                Params = new string[] { "action=search_video", "q=" + parameter }
-                            });
-                            break;
+                        //case HeyKodiCommandEnum.Youtube:
+                        //    KodiService.ExecuteAddon(new ExecuteAddonParams()
+                        //    {
+                        //        AddonId = "plugin.video.youtube",
+                        //        Wait = false,
+                        //        Params = new string[] { "action=search_video", "q=" + parameter }
+                        //    });
+                        //    break;
                         case HeyKodiCommandEnum.Home:
                             KodiService.InputHome();
                             break;

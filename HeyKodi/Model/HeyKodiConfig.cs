@@ -81,8 +81,6 @@ namespace HeyKodi.Model
                         c.NotifyPropertyChanged("");
                     }
                 }
-
-                System.Windows.MessageBox.Show(language);
             }
         }
         
@@ -619,16 +617,16 @@ namespace HeyKodi.Model
                     GetParameterQuestion = () => Resources.KODY_COMMAND_QUESTION_SEARCH
                 }
             },
-            {
-                HeyKodiCommandEnum.Youtube,
-                new CommandInfos()
-                {
-                    GetDescription = () => Resources.KODI_COMMAND_DESC_YOUTUBE_SEARCH,
-                    DefaultSpeech = Resources.KODI_COMMAND_SPEECH_YOUTUBE,
-                    ParameterRequired = true,
-                    GetParameterQuestion = () => Resources.KODY_COMMAND_QUESTION_SEARCH
-                }
-            },            
+            //{
+            //    HeyKodiCommandEnum.Youtube,
+            //    new CommandInfos()
+            //    {
+            //        GetDescription = () => Resources.KODI_COMMAND_DESC_YOUTUBE_SEARCH,
+            //        DefaultSpeech = Resources.KODI_COMMAND_SPEECH_YOUTUBE,
+            //        ParameterRequired = true,
+            //        GetParameterQuestion = () => Resources.KODY_COMMAND_QUESTION_SEARCH
+            //    }
+            //},            
             {
                 HeyKodiCommandEnum.Home,
                 new CommandInfos()
