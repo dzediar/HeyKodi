@@ -49,13 +49,16 @@ x Donner la possibilité de lancer des lignes de commandes (sélection de fichie
 x Ajout / suppression de commandes d'applications
 x Shellcommands : permettre la saisie d'un paramètre vocal avec %%param%% dans les arguments
 x Localiser l'appli, donner le choix de la langue dans la config (en / fr)
+x Il y a un gros souci dans la consolidation des commandes
+x Compléter la doc et la traduire en anglais, modifier l'ouverture de doc
+x Tester tester tester... (sur le médiacenter)
+x Publier une release
+x Parler de mon app sur le site kodi
 
-Il y a un gros souci dans la consolidation des commandes
+Traduire "divers" et "Etes-vous certain de vouloir quitter Hey Kodi ?"
 Désactiver le drag & drop dans la grille
-Compléter la doc et la traduire en anglais, modifier l'ouverture de doc
-Tester tester tester... (sur le médiacenter)
-Publier une release
-Parler de mon app sur le site kodi
+Modifier la page https://kodi.wiki/view/Supplemental_tools
+Récup des titres média : limiter le nb de retours, ne charger la suite que si on ne dépasse pas le nb max (1000)
 
 C'est très mal codé, nettoyer le code, tout mettre à sa place dans les bonnes couches
 Commandes d'applications : sélection de fichier non readonly, détecter les paramètres dans la ligne de commande, possibilité de remplacer %%parameter%% par le paramètre vocale (case à cocher paramétrable oui / non)
