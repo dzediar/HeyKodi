@@ -1772,6 +1772,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -6010,15 +6018,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Hey Kodi !"
-        "ProductCode" = "8:{74536925-F8EF-4C4F-A097-E1FD62FE1355}"
-        "PackageCode" = "8:{9668E746-B725-4B77-81D7-3CA2BACA33DF}"
+        "ProductCode" = "8:{2ECA7AD7-1487-4DDE-892C-3A30B2812913}"
+        "PackageCode" = "8:{2EACE8B4-2553-436A-A1D6-124FDA5223E5}"
         "UpgradeCode" = "8:{3E6A466F-DA2D-45B2-BF01-A8D2D66C3940}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.0"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:noenjeru"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
