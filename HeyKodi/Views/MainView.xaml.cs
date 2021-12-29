@@ -4,6 +4,8 @@ using HeyKodi.ViewModels;
 using KodiRPC.RPC.RequestResponse.Params.VideoLibrary;
 using KodiRPC.RPC.Specifications;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -64,7 +66,7 @@ namespace HeyKodi.Views
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (MainViewModel != null && zSpeechBalloon.ShowDialogBalloon(zSpeechBalloonIcon.Question, MainViewModel.Title,
-                "Etes-vous certain de vouloir quitter Hey Kodi ?", zSpeechBalloonButtonsType.YesNo) == zSpeechBalloonDialogResult.No)
+                HeyKodi.Properties.Resources.MAINVIEW_CLOSE_CONFIRM_MESSAGE, zSpeechBalloonButtonsType.YesNo) == zSpeechBalloonDialogResult.No)
             {
                 e.Cancel = true;
             }
@@ -168,7 +170,9 @@ namespace HeyKodi.Views
                     {
                         if (Application.Current?.MainWindow != null && Application.Current.MainWindow.IsVisible)
                         {
+                            WpfHelper.KillFocus();
                             Application.Current.MainWindow.WindowState = WindowState.Minimized;
+                            BringKodiToFront();
                         }
                     });
                 }
@@ -217,6 +221,39 @@ namespace HeyKodi.Views
             }
         }
 
+        public void BringKodiToFront()
+        {
+            // get the process
+            var bProcess = Process.GetProcessesByName("Kodi").FirstOrDefault();
+
+            // check if the process is running
+            if (bProcess != null)
+            {
+                // check if the window is hidden / minimized
+                if (bProcess.MainWindowHandle == IntPtr.Zero)
+                {
+                    // the window is hidden so try to restore it before setting focus.
+                    ShowWindow(bProcess.Handle, ShowWindowEnum.Restore);
+                }
+
+                // set user the focus to the window
+                SetForegroundWindow(bProcess.MainWindowHandle);
+            }
+            //else
+            //{
+            //    // the process is not running, so start it
+            //    Process.Start(processName);
+            //}
+        }
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        private static extern bool ShowWindow(IntPtr hWnd, ShowWindowEnum flags);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern int SetForegroundWindow(IntPtr hwnd);
+
+
         #region IReadOnlyElement Membres
 
         /// <summary>Etat de lecture seule</summary>
@@ -244,4 +281,14 @@ namespace HeyKodi.Views
 
         #endregion
     }
+
+
+    public enum ShowWindowEnum
+    {
+        Hide = 0,
+        ShowNormal = 1, ShowMinimized = 2, ShowMaximized = 3,
+        Maximize = 3, ShowNormalNoActivate = 4, Show = 5,
+        Minimize = 6, ShowMinNoActivate = 7, ShowNoActivate = 8,
+        Restore = 9, ShowDefault = 10, ForceMinimized = 11
+    };
 }

@@ -53,12 +53,14 @@ x Il y a un gros souci dans la consolidation des commandes
 x Compléter la doc et la traduire en anglais, modifier l'ouverture de doc
 x Tester tester tester... (sur le médiacenter)
 x Publier une release
-x Parler de mon app sur le site kodi
+x Pb activation hey kodi qui déactive kodi
+x Traduire "divers" et "Etes-vous certain de vouloir quitter Hey Kodi ?"
+non Modifier la page https://kodi.wiki/view/Supplemental_tools
+x Récup des titres média : limiter le nb de retours, ne charger la suite que si on ne dépasse pas le nb max (1000)
+x ajouter un paramètre de ligne de commande pour lancer hey kodi avec un delay
 
-Traduire "divers" et "Etes-vous certain de vouloir quitter Hey Kodi ?"
+
 Désactiver le drag & drop dans la grille
-Modifier la page https://kodi.wiki/view/Supplemental_tools
-Récup des titres média : limiter le nb de retours, ne charger la suite que si on ne dépasse pas le nb max (1000)
 
 C'est très mal codé, nettoyer le code, tout mettre à sa place dans les bonnes couches
 Commandes d'applications : sélection de fichier non readonly, détecter les paramètres dans la ligne de commande, possibilité de remplacer %%parameter%% par le paramètre vocale (case à cocher paramétrable oui / non)

@@ -268,7 +268,7 @@
     <value>L'exécution de la commande d'application a échoué.</value>
   </data>
   <data name="MAINVIEWMODEL_BAD_VOLUME_VALUE" xml:space="preserve">
-    <value>'{0}' n'est pas une valeur de volume valide.</value>
+    <value>Ce n'est pas une valeur de volume valide.</value>
   </data>
   <data name="MAINVIEWMODEL_GET_MEDIA_GRAMAR_FAILED" xml:space="preserve">
     <value>Impossible de récupérer les titres des films / musiques présents dans Kodi.</value>
@@ -403,6 +403,12 @@
     <value>Que dois-je rechercher ?</value>
   </data>
   <data name="KODY_COMMAND_QUESTION_VOLUME" xml:space="preserve">
-    <value>Quel niveau de volume souhaitez-vous ?</value>
+    <value>Quel niveau de volume souhaitez-vous de 10 à 100 pourcent ?</value>
+  </data>
+  <data name="CONFIGVIEW_MISC" xml:space="preserve">
+    <value>Divers</value>
+  </data>
+  <data name="MAINVIEW_CLOSE_CONFIRM_MESSAGE" xml:space="preserve">
+    <value>Etes-vous certain de vouloir quitter Hey Kodi ?</value>
   </data>
 </root>

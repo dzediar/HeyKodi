@@ -160,6 +160,15 @@ namespace HeyKodi.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Misc.
+        /// </summary>
+        public static string CONFIGVIEW_MISC {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_MISC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Password.
         /// </summary>
         public static string CONFIGVIEW_PASSWORD {
@@ -808,11 +817,20 @@ namespace HeyKodi.Properties {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à What volume level do you want?.
+        ///   Recherche une chaîne localisée semblable à What volume level do you want from 10 to 100 percent ?.
         /// </summary>
         public static string KODY_COMMAND_QUESTION_VOLUME {
             get {
                 return ResourceManager.GetString("KODY_COMMAND_QUESTION_VOLUME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Are you sure you want to quit Hey Kodi ?.
+        /// </summary>
+        public static string MAINVIEW_CLOSE_CONFIRM_MESSAGE {
+            get {
+                return ResourceManager.GetString("MAINVIEW_CLOSE_CONFIRM_MESSAGE", resourceCulture);
             }
         }
         
@@ -880,7 +898,7 @@ namespace HeyKodi.Properties {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à &apos;{0}&apos; is not a valid volume value..
+        ///   Recherche une chaîne localisée semblable à This is not a valid volume value..
         /// </summary>
         public static string MAINVIEWMODEL_BAD_VOLUME_VALUE {
             get {

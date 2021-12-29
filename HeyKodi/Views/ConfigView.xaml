@@ -136,7 +136,8 @@
                 </zw:zButton>
             </zw:zStackPanel>
         </zw:zGrid>
-        <zw:zTabGroupBox Header="Divers" IsExpandable="False" IsExpanded="True" Margin="0,2,0,2">
+        <zw:zTabGroupBox Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_MISC}"
+                         IsExpandable="False" IsExpanded="True" Margin="0,2,0,2">
 			<zw:zGrid>
 				<zw:zGrid.ColumnDefinitions>
 					<ColumnDefinition Width="0.5*"/>

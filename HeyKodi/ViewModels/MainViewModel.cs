@@ -25,6 +25,8 @@ namespace HeyKodi.ViewModels
 {
     public class MainViewModel : GalaSoft.MvvmLight.ViewModelBase
     {
+        private const int GRAMMAR_LIMIT = 800;
+
         private static MainViewModel instance;
 
         public static MainViewModel Instance { get { return instance ?? (instance = new MainViewModel()); } }
@@ -174,6 +176,7 @@ namespace HeyKodi.ViewModels
         public bool RunKodiCommand(HeyKodiKodyCommandConfig command, string parameter = null, bool mute = false)
         {
             Exception exception = null;
+            string errorSpeech = null;
 
             try
             {
@@ -329,7 +332,8 @@ namespace HeyKodi.ViewModels
                             }
                             else
                             {
-                                throw new Exception(string.Format(Resources.MAINVIEWMODEL_BAD_VOLUME_VALUE, parameter));
+                                errorSpeech = Resources.MAINVIEWMODEL_BAD_VOLUME_VALUE;
+                                //throw new Exception(string.Format(Resources.MAINVIEWMODEL_BAD_VOLUME_VALUE, parameter));
                             }
                             break;
                         case HeyKodiCommandEnum.ShowVideos:
@@ -372,14 +376,17 @@ namespace HeyKodi.ViewModels
                 exception = new Exception(Resources.MAINVIEWMODEL_KODI_COMMAND_EXE_FAILED, ex);
             }
 
-            if (exception != null)
+            if (exception != null || !string.IsNullOrWhiteSpace(errorSpeech))
             {
                 if (!mute)
                 {
-                    PlaySound(KodiSpeechRecognizerSound.CancelSound);
+                    PlaySound(KodiSpeechRecognizerSound.CancelSound, errorSpeech);
                 }
 
-                ShowMessage(ShowMessageType.Error, exception);
+                if (exception != null)
+                {
+                    ShowMessage(ShowMessageType.Error, exception);
+                }
 
                 return false;
             }
@@ -458,120 +465,7 @@ namespace HeyKodi.ViewModels
         {
             if (mediaGrammar == null && !string.IsNullOrWhiteSpace(heyKodiConfig.KodiApiHost))
             {
-                try
-                {
-                    var ponctuations = new char[] { ';', ',', ':', '.', '!', '?', '/', '-', '_', '=' };
-
-                    var movies = kodiService.GetMovies(new GetMoviesParams() { Properties = new string[] { "title", "writer", "genre" } });
-                    var tvShows = kodiService.GetTvShows(new GetTvShowsParams() { Properties = new string[] { "title", "genre" } });
-                    var albums = kodiService.GetAlbums(new GetAlbumsParams() { Properties = new string[] { "title", "artist", "songgenres" } });
-
-                    var moviesTitles = movies.Result.Movies
-                        .Select(m => m.Title)
-                        .Where(t => !string.IsNullOrWhiteSpace(t))
-                        .Select(t => t.Trim().ToLower())
-                        .Distinct()
-                        .ToList();
-
-                    var movieTitlesParts = moviesTitles
-                        .Select(t => t.Split(ponctuations))
-                        .Where(mt => mt.Length > 1)
-                        .SelectMany(mt => mt)
-                        .Select(tp => tp.Trim())
-                        .Where(tp => tp.Length > 3)
-                        .ToList();
-
-                    var moviesGenres = movies.Result.Movies
-                        .Where(m => m.Genre != null && m.Genre.Length > 0)
-                        .SelectMany(m => m.Genre)
-                        .Where(g => !string.IsNullOrWhiteSpace(g))
-                        .Select(g => g.Trim().ToLower())
-                        .Distinct()
-                        .ToList();
-
-                    var moviesWriters = movies.Result.Movies
-                        .Where(m => m.Writer != null && m.Writer.Length > 0)
-                        .SelectMany(m => m.Writer)
-                        .Where(w => !string.IsNullOrWhiteSpace(w))
-                        .Select(g => g.Trim().ToLower())
-                        .Distinct()
-                        .ToList();
-
-                    var tvShowsTitles = tvShows.Result.TvShows
-                        .Select(m => m.Title)
-                        .Where(t => !string.IsNullOrWhiteSpace(t))
-                        .Select(t => t.Trim().ToLower())
-                        .Distinct()
-                        .ToList();
-
-                    var tvShowsTitlesParts = tvShowsTitles
-                        .Select(t => t.Split(ponctuations))
-                        .Where(mt => mt.Length > 1)
-                        .SelectMany(mt => mt)
-                        .Select(tp => tp.Trim())
-                        .Where(tp => tp.Length > 3)
-                        .ToList();
-
-                    var tvShowsGenres = tvShows.Result.TvShows
-                        .Where(m => m.Genre != null && m.Genre.Length > 0)
-                        .SelectMany(m => m.Genre)
-                        .Where(g => !string.IsNullOrWhiteSpace(g))
-                        .Select(g => g.Trim().ToLower())
-                        .Distinct()
-                        .ToList();
-
-                    var albumsTitles = albums.Result.Albums
-                        .Select(m => m.Title)
-                        .Where(t => !string.IsNullOrWhiteSpace(t))
-                        .Select(t => t.Trim().ToLower())
-                        .Distinct()
-                        .ToList();
-
-                    var albumsTitlesParts = albumsTitles
-                        .Select(t => t.Split(ponctuations))
-                        .Where(mt => mt.Length > 1)
-                        .SelectMany(mt => mt)
-                        .Select(tp => tp.Trim())
-                        .Where(tp => tp.Length > 3)
-                        .ToList();
-
-                    var albumsGenres = albums.Result.Albums
-                        .Where(a => a.SongGenres != null && a.SongGenres.Length > 0)
-                        .SelectMany(a => a.SongGenres)
-                        .Select(sg => sg.Title)
-                        .Where(g => !string.IsNullOrWhiteSpace(g))
-                        .Select(g => g.Trim().ToLower())
-                        .Distinct()
-                        .ToList();
-
-                    var albumsArtists = albums.Result.Albums
-                        .Where(a => a.Artist != null && a.Artist.Length > 0)
-                        .SelectMany(a => a.Artist)
-                        .Where(a => !string.IsNullOrWhiteSpace(a))
-                        .Select(a => a.Trim().ToLower())
-                        .Distinct()
-                        .ToList();
-
-                    mediaGrammar = new List<string>();
-
-                    mediaGrammar.AddRange(moviesTitles);
-                    mediaGrammar.AddRange(movieTitlesParts);
-                    mediaGrammar.AddRange(tvShowsTitles);
-                    mediaGrammar.AddRange(tvShowsTitlesParts);
-                    mediaGrammar.AddRange(albumsArtists);
-
-                    mediaGrammar.AddRange(albumsTitles);
-                    mediaGrammar.AddRange(albumsTitlesParts);
-                    mediaGrammar.AddRange(moviesGenres);
-                    mediaGrammar.AddRange(moviesWriters);
-                    mediaGrammar.AddRange(tvShowsGenres);
-                    mediaGrammar.AddRange(albumsGenres);
-                }
-                catch (Exception ex)
-                {
-                    MainViewModel.Instance.ShowMessage(Messages.ShowMessageType.Warning,
-                        Resources.MAINVIEWMODEL_GET_MEDIA_GRAMAR_FAILED + ex.ToMessageDetailed());
-                }
+                ReadMediaGrammar();
             }
 
             grammar = HeyKodiConfig.KodiCommands.Select(c => c.CommandSpeech)
@@ -602,8 +496,196 @@ namespace HeyKodi.ViewModels
                 grammar.AddRange(filtredMediaDoublons);
             }
 
-            grammar = grammar.Distinct().Where(g => g.Length > 3).Take(1000).ToList();
+            grammar = grammar.Distinct().Where(g => g.Length > 3).Take(GRAMMAR_LIMIT).ToList();
         }
+
+
+        private void ReadMediaGrammar()
+        {
+            mediaGrammar = new List<string>();
+
+            try
+            {
+                var ponctuations = new char[] { ';', ',', ':', '.', '!', '?', '/', '-', '_', '=' };
+
+                var movies = kodiService.GetMovies(new GetMoviesParams() { Properties = new string[] { "title", "writer", "genre" } });
+
+                var moviesTitles = movies.Result.Movies
+                    .Select(m => m.Title)
+                    .Where(t => !string.IsNullOrWhiteSpace(t))
+                    .Select(t => t.Trim().ToLower())
+                    .Distinct()
+                    .ToList();
+
+                mediaGrammar.AddRange(moviesTitles);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var movieTitlesParts = moviesTitles
+                    .Select(t => t.Split(ponctuations))
+                    .Where(mt => mt.Length > 1)
+                    .SelectMany(mt => mt)
+                    .Select(tp => tp.Trim())
+                    .Where(tp => tp.Length > 3)
+                    .ToList();
+
+                mediaGrammar.AddRange(movieTitlesParts);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var tvShows = kodiService.GetTvShows(new GetTvShowsParams() { Properties = new string[] { "title", "genre" } });
+
+                var tvShowsTitles = tvShows.Result.TvShows
+                    .Select(m => m.Title)
+                    .Where(t => !string.IsNullOrWhiteSpace(t))
+                    .Select(t => t.Trim().ToLower())
+                    .Distinct()
+                    .ToList();
+
+                mediaGrammar.AddRange(tvShowsTitles);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var tvShowsTitlesParts = tvShowsTitles
+                    .Select(t => t.Split(ponctuations))
+                    .Where(mt => mt.Length > 1)
+                    .SelectMany(mt => mt)
+                    .Select(tp => tp.Trim())
+                    .Where(tp => tp.Length > 3)
+                    .ToList();
+
+                mediaGrammar.AddRange(tvShowsTitlesParts);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var albums = kodiService.GetAlbums(new GetAlbumsParams() { Properties = new string[] { "title", "artist", "songgenres" } });
+
+                var albumsArtists = albums.Result.Albums
+                    .Where(a => a.Artist != null && a.Artist.Length > 0)
+                    .SelectMany(a => a.Artist)
+                    .Where(a => !string.IsNullOrWhiteSpace(a))
+                    .Select(a => a.Trim().ToLower())
+                    .Distinct()
+                    .ToList();
+
+                mediaGrammar.AddRange(albumsArtists);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var albumsTitles = albums.Result.Albums
+                    .Select(m => m.Title)
+                    .Where(t => !string.IsNullOrWhiteSpace(t))
+                    .Select(t => t.Trim().ToLower())
+                    .Distinct()
+                    .ToList();
+
+                mediaGrammar.AddRange(albumsTitles);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var albumsTitlesParts = albumsTitles
+                    .Select(t => t.Split(ponctuations))
+                    .Where(mt => mt.Length > 1)
+                    .SelectMany(mt => mt)
+                    .Select(tp => tp.Trim())
+                    .Where(tp => tp.Length > 3)
+                    .ToList();
+
+                mediaGrammar.AddRange(albumsTitlesParts);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var moviesGenres = movies.Result.Movies
+                    .Where(m => m.Genre != null && m.Genre.Length > 0)
+                    .SelectMany(m => m.Genre)
+                    .Where(g => !string.IsNullOrWhiteSpace(g))
+                    .Select(g => g.Trim().ToLower())
+                    .Distinct()
+                    .ToList();
+
+                mediaGrammar.AddRange(moviesGenres);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var moviesWriters = movies.Result.Movies
+                    .Where(m => m.Writer != null && m.Writer.Length > 0)
+                    .SelectMany(m => m.Writer)
+                    .Where(w => !string.IsNullOrWhiteSpace(w))
+                    .Select(g => g.Trim().ToLower())
+                    .Distinct()
+                    .ToList();
+
+                mediaGrammar.AddRange(moviesWriters);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var tvShowsGenres = tvShows.Result.TvShows
+                    .Where(m => m.Genre != null && m.Genre.Length > 0)
+                    .SelectMany(m => m.Genre)
+                    .Where(g => !string.IsNullOrWhiteSpace(g))
+                    .Select(g => g.Trim().ToLower())
+                    .Distinct()
+                    .ToList();
+
+                mediaGrammar.AddRange(tvShowsGenres);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+
+                var albumsGenres = albums.Result.Albums
+                    .Where(a => a.SongGenres != null && a.SongGenres.Length > 0)
+                    .SelectMany(a => a.SongGenres)
+                    .Select(sg => sg.Title)
+                    .Where(g => !string.IsNullOrWhiteSpace(g))
+                    .Select(g => g.Trim().ToLower())
+                    .Distinct()
+                    .ToList();
+
+                mediaGrammar.AddRange(albumsGenres);
+
+                if (mediaGrammar.Count > GRAMMAR_LIMIT)
+                {
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                mediaGrammar = null;
+
+                MainViewModel.Instance.ShowMessage(Messages.ShowMessageType.Warning,
+                    Resources.MAINVIEWMODEL_GET_MEDIA_GRAMAR_FAILED + ex.ToMessageDetailed());
+            }
+        }
+
 
         private string GetPurgedGrammar(string grammar)
         {
