@@ -88,11 +88,29 @@ namespace HeyKodi.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Hide.
+        /// </summary>
+        public static string CONFIGVIEW_COMMAND_HIDE {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_COMMAND_HIDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Command line.
         /// </summary>
         public static string CONFIGVIEW_COMMAND_LINE {
             get {
                 return ResourceManager.GetString("CONFIGVIEW_COMMAND_LINE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Parameter values.
+        /// </summary>
+        public static string CONFIGVIEW_COMMAND_PARAM_VALUES {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_COMMAND_PARAM_VALUES", resourceCulture);
             }
         }
         
@@ -142,11 +160,20 @@ namespace HeyKodi.Properties {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Language of the interface.
+        ///   Recherche une chaîne localisée semblable à Interface language.
         /// </summary>
         public static string CONFIGVIEW_LANGUAGE {
             get {
                 return ResourceManager.GetString("CONFIGVIEW_LANGUAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Media fetch pre-delay.
+        /// </summary>
+        public static string CONFIGVIEW_MEDIA_FETCH_DELAY {
+            get {
+                return ResourceManager.GetString("CONFIGVIEW_MEDIA_FETCH_DELAY", resourceCulture);
             }
         }
         

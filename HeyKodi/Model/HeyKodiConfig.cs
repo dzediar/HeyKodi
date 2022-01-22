@@ -249,6 +249,22 @@ namespace HeyKodi.Model
             }
         }
 
+        private int mediaFetchDelay = 5;
+
+        public int MediaFetchDelay
+        {
+            get
+            {
+                return mediaFetchDelay;
+            }
+            set
+            {
+                mediaFetchDelay = value;
+                NotifyPropertyChanged(nameof(MediaFetchDelay));
+            }
+        }
+
+
         private ObservableCollection<HeyKodiKodyCommandConfig> kodiCommands;
 
         public ObservableCollection<HeyKodiKodyCommandConfig> KodiCommands
@@ -331,6 +347,21 @@ namespace HeyKodi.Model
             }
         }
 
+        private bool hide;
+
+        public bool Hide
+        {
+            get
+            {
+                return hide;
+            }
+            set
+            {
+                hide = value;
+                NotifyPropertyChanged(nameof(Hide));
+            }
+        }        
+
         private string commandArguments;
 
         public string CommandArguments
@@ -345,6 +376,21 @@ namespace HeyKodi.Model
                 NotifyPropertyChanged(nameof(CommandArguments));
             }
         }
+
+        private string commandParameterValues;
+
+        public string CommandParameterValues
+        {
+            get
+            {
+                return commandParameterValues;
+            }
+            set
+            {
+                commandParameterValues = value;
+                NotifyPropertyChanged(nameof(CommandParameterValues));
+            }
+        }        
 
         private string commandSpeech;
 
@@ -513,6 +559,7 @@ namespace HeyKodi.Model
             config.Volume = 1;
             config.MinimizeWhenPending = false;
             config.UseSpeechSynthesizer = true;
+            config.MediaFetchDelay = 5;
             config.Consolidate();
 
             return config;
@@ -528,6 +575,7 @@ namespace HeyKodi.Model
             config.KodiApiHost = config.KodiApiHost?.Trim();
             config.KodiApiPort = config.KodiApiPort < 1 || config.KodiApiPort > 65535 ? 5156 : config.KodiApiPort;
             config.KodiWakeupSpeech = ConsolidateSpeech(config.KodiWakeupSpeech);
+            config.MediaFetchDelay = config.MediaFetchDelay < 0 || config.MediaFetchDelay > 60 ? 5 : config.MediaFetchDelay;
 
             var kodiCommands = new List<HeyKodiKodyCommandConfig>();
 
@@ -569,7 +617,7 @@ namespace HeyKodi.Model
             else
             {
                 config.ShellCommands = new ObservableCollection<HeyKodiShellCommandConfig>(
-                    config.ShellCommands.Where(c => !(string.IsNullOrWhiteSpace(c.CommandSpeech) || string.IsNullOrWhiteSpace(c.CommandLine))));
+                    config.ShellCommands.Where(c => !string.IsNullOrWhiteSpace(c.CommandSpeech) && !string.IsNullOrWhiteSpace(c.CommandLine)));
             }
 
             return config;

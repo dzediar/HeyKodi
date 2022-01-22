@@ -11,8 +11,7 @@
              xmlns:viewmodel="clr-namespace:HeyKodi.ViewModels"             
              xmlns:tools="clr-namespace:HeyKodi.Tools"             
              mc:Ignorable="d" 
-             Width="900" 
-             Height="520"
+             Width="800" 
              x:Name="configView">
     <UserControl.Resources>
         <Style TargetType="zw:zTextBlock" BasedOn="{StaticResource {x:Type zw:zTextBlock}}">
@@ -23,7 +22,7 @@
             <Setter Property="CornerRadius" Value="0"/>
             <Setter Property="Margin" Value="4"/>
             <Setter Property="Padding" Value="2"/>
-            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="MinWidth" Value="70"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style TargetType="zw:zComboBox" BasedOn="{StaticResource {x:Type zw:zComboBox}}">
@@ -47,7 +46,6 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Height" Value="150"/>
-            <Setter Property="ReadOnly" Value="ReadOnly"/>
             <Setter Property="AlternationBrush">
                 <Setter.Value>
                     <SolidColorBrush Color="#0DFFFFFF"/>
@@ -65,38 +63,38 @@
         </Style>
     </UserControl.Resources>
     <zw:zStackPanel Orientation="Vertical">
-        <zw:zTabGroupBox Header="Kodi API" IsExpandable="False" IsExpanded="True" Margin="0,4,0,2">
-            <zw:zGrid>
-                <zw:zGrid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.25*"/>
-                    <ColumnDefinition Width="0.25*"/>
-                    <ColumnDefinition Width="0.25*"/>
-                    <ColumnDefinition Width="0.25*"/>
-                </zw:zGrid.ColumnDefinitions>
-                <zw:zGrid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </zw:zGrid.RowDefinitions>
-                <zw:zTextBlock Grid.Column="0" Grid.Row="0" Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_HOST}"/>
-                <zw:zTextBox x:Name="edHost" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Text="{Binding HeyKodiConfig.KodiApiHost, Mode=TwoWay}"/>
-                <zw:zTextBlock Grid.Column="2" Grid.Row="0" Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_PORT}"/>
-                <zw:zTextBox x:Name="edPort" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" Text="{Binding HeyKodiConfig.KodiApiPort, Mode=TwoWay}" InputMode="Integer"/>
-                <zw:zTextBlock Grid.Column="0" Grid.Row="1" Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_USERNAME}"/>
-                <zw:zTextBox x:Name="edUsers" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Text="{Binding HeyKodiConfig.KodiApiUserName, Mode=TwoWay}"/>
-                <zw:zTextBlock Grid.Column="2" Grid.Row="1" Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_PASSWORD}"/>
-                <zw:zTextBox x:Name="edPassword" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" Text="{Binding HeyKodiConfig.KodiApiPassword, Mode=TwoWay}"/>
-            </zw:zGrid>
-        </zw:zTabGroupBox>
         <zw:zGrid>
             <zw:zGrid.ColumnDefinitions>
-                <ColumnDefinition Width="0.42*"/>
-                <ColumnDefinition Width="0.58*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="500"/>
             </zw:zGrid.ColumnDefinitions>
+            <zw:zTabGroupBox Grid.Column="0" Header="Kodi API" IsExpandable="False" IsExpanded="True" Margin="0,0,4,0">
+                <zw:zGrid>
+                    <zw:zGrid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </zw:zGrid.ColumnDefinitions>
+                    <zw:zGrid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </zw:zGrid.RowDefinitions>
+                    <zw:zTextBlock Grid.Column="0" Grid.Row="0" Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_HOST}"/>
+                    <zw:zTextBox x:Name="edHost" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Text="{Binding HeyKodiConfig.KodiApiHost, Mode=TwoWay}"/>
+                    <zw:zTextBlock Grid.Column="0" Grid.Row="1" Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_PORT}"/>
+                    <zw:zTextBox x:Name="edPort" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Text="{Binding HeyKodiConfig.KodiApiPort, Mode=TwoWay}" InputMode="Integer"/>
+                    <zw:zTextBlock Grid.Column="0" Grid.Row="2" Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_USERNAME}"/>
+                    <zw:zTextBox x:Name="edUsers" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Text="{Binding HeyKodiConfig.KodiApiUserName, Mode=TwoWay}"/>
+                    <zw:zTextBlock Grid.Column="0" Grid.Row="3" Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_PASSWORD}"/>
+                    <zw:zTextBox x:Name="edPassword" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" Text="{Binding HeyKodiConfig.KodiApiPassword, Mode=TwoWay}"/>
+                </zw:zGrid>
+            </zw:zTabGroupBox>
             <zw:zTabGroupBox Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_KODI_VOCAL_COMMANDS}" 
-                             IsExpandable="False" IsExpanded="True" Margin="0,2,0,2">
+                             Grid.Column="1" IsExpandable="False" IsExpanded="True" Margin="0,0,0,2">
                 <zwlv:zListView ItemsSource="{Binding HeyKodiConfig.KodiCommands, Mode=OneWay}">
                     <zwlv:zListViewField Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Source={x:Static viewmodel:MainViewModel.Instance}, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_KODI_COMMAND}" 
-                                         EditMode="Text" Width="230" ReadOnly="ReadOnly">
+                                         EditMode="Text" Width="300" ReadOnly="ReadOnly">
                         <zwlv:zListViewField.DisplayMemberBinding>
                             <MultiBinding Converter="{x:Static zwconverters:zDictionarySeekConverter.Instance}" ConverterParameter="Description">
                                 <Binding Path="" Mode="OneWay" Source="{x:Static model:HeyKodiConfigExtensions.CommandRepository}" />
@@ -105,23 +103,29 @@
                         </zwlv:zListViewField.DisplayMemberBinding>
                     </zwlv:zListViewField>
                     <zwlv:zListViewField Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Source={x:Static viewmodel:MainViewModel.Instance}, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_VOCAL_TEXT}" 
-                                         DisplayMemberBinding="{Binding CommandSpeech, Mode=TwoWay}" EditMode="Text" Width="100" ReadOnly="ReadAndWrite"/>
+                                         DisplayMemberBinding="{Binding CommandSpeech, Mode=TwoWay}" EditMode="Text" Width="150" ReadOnly="ReadAndWrite"/>
                 </zwlv:zListView>
             </zw:zTabGroupBox>
+        </zw:zGrid>
+        <zw:zGrid Margin="0,4,0,0">
             <zw:zTabGroupBox Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_SHELL_VOCAL_COMMANDS}" Grid.Column="1" 
-                             IsExpandable="False" IsExpanded="True" Margin="4,2,0,2">
+                             IsExpandable="False" IsExpanded="True">
                 <zwlv:zListView ItemsSource="{Binding HeyKodiConfig.ShellCommands, Mode=OneWay}" 
                                 SelectedItem="{Binding SelectedApplicationCommmand, Mode=TwoWay}">
                     <zwlv:zListViewField Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Source={x:Static viewmodel:MainViewModel.Instance}, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_COMMAND_LINE}" 
-                                         EditMode="FileSelection" Width="240" ReadOnly="ReadAndWrite"
+                                         EditMode="FileSelection" Width="300" ReadOnly="ReadAndWrite"
                                          DisplayMemberBinding="{Binding CommandLine, Mode=TwoWay}"/>
-                    <zwlv:zListViewField Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Source={x:Static viewmodel:MainViewModel.Instance}, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_COMMAND_ARGS}" EditMode="Text" Width="130" 
-                                         DisplayMemberBinding="{Binding CommandArguments, Mode=TwoWay}" ReadOnly="ReadAndWrite"/>
-                    <zwlv:zListViewField Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Source={x:Static viewmodel:MainViewModel.Instance}, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_VOCAL_TEXT}" EditMode="Text" Width="100" 
-                                         DisplayMemberBinding="{Binding CommandSpeech, Mode=TwoWay}" ReadOnly="ReadAndWrite"/>
+                    <zwlv:zListViewField Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Source={x:Static viewmodel:MainViewModel.Instance}, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_COMMAND_ARGS}" 
+                                         DisplayMemberBinding="{Binding CommandArguments, Mode=TwoWay}" EditMode="Text" Width="165" ReadOnly="ReadAndWrite"/>
+                    <zwlv:zListViewField Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Source={x:Static viewmodel:MainViewModel.Instance}, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_COMMAND_PARAM_VALUES}" 
+                                         DisplayMemberBinding="{Binding CommandParameterValues, Mode=TwoWay}" EditMode="Text" Width="140" ReadOnly="ReadAndWrite"/>
+                    <zwlv:zListViewField Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Source={x:Static viewmodel:MainViewModel.Instance}, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_COMMAND_HIDE}" 
+                                         DisplayMemberBinding="{Binding Hide, Mode=TwoWay}" EditMode="CheckBox" Width="50" ReadOnly="ReadAndWrite"/>
+                    <zwlv:zListViewField Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Source={x:Static viewmodel:MainViewModel.Instance}, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_VOCAL_TEXT}" 
+                                         DisplayMemberBinding="{Binding CommandSpeech, Mode=TwoWay}" EditMode="Text" Width="100" ReadOnly="ReadAndWrite"/>
                 </zwlv:zListView>
             </zw:zTabGroupBox>
-            <zw:zStackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,8,8,0">
+            <zw:zStackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,8,0">
                 <zw:zButton x:Name="btSettings" Style="{StaticResource {x:Static zw:zCompRepository.EmptyButtonStyleKey}}" 
                             Background="Transparent" Padding="0" ToolTip="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_ADD_SHELL_COMMAND}" 
                             Command="{Binding AddShellCommandCommand, Mode=OneWay}">
@@ -137,47 +141,52 @@
             </zw:zStackPanel>
         </zw:zGrid>
         <zw:zTabGroupBox Header="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_MISC}"
-                         IsExpandable="False" IsExpanded="True" Margin="0,2,0,2">
+                         IsExpandable="False" IsExpanded="True" Margin="0,4,0,0">
 			<zw:zGrid>
 				<zw:zGrid.ColumnDefinitions>
-					<ColumnDefinition Width="0.5*"/>
-					<ColumnDefinition Width="0.5*"/>
-				</zw:zGrid.ColumnDefinitions>
+					<ColumnDefinition Width="0.50*"/>
+                    <ColumnDefinition Width="0.50*"/>
+                </zw:zGrid.ColumnDefinitions>
                 <zw:zGrid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </zw:zGrid.RowDefinitions>
                 <zw:zStackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                    <zw:zCheckBox Content="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_RUN_AT_WINDOWS_START}" 
+                                  IsChecked="{Binding HeyKodiConfig.RunAtWindowsStart, Mode=TwoWay}"/>
                     <zw:zStackPanel Orientation="Horizontal">
                         <zw:zCheckBox Content="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_AWAKE_HEYKODI}" 
-                                  IsChecked="{Binding HeyKodiConfig.NeedHeyKodiWakeup, Mode=TwoWay}"/>
+                                      IsChecked="{Binding HeyKodiConfig.NeedHeyKodiWakeup, Mode=TwoWay}"/>
                         <zw:zTextBox Text="{Binding HeyKodiConfig.KodiWakeupSpeech, Mode=TwoWay}" 
                                      IsReadOnly="{Binding HeyKodiConfig.NeedHeyKodiWakeup, Mode=OneWay, Converter={x:Static zwconverters:zBoolToInverseConverter.Instance}}"/>
                     </zw:zStackPanel>
-                    <zw:zCheckBox Content="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_RUN_AT_WINDOWS_START}" 
-                                  IsChecked="{Binding HeyKodiConfig.RunAtWindowsStart, Mode=TwoWay}"/>
                     <zw:zCheckBox Content="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_MINIMIZE_WHEN_PENDING}" 
                                   IsChecked="{Binding HeyKodiConfig.MinimizeWhenPending, Mode=TwoWay}"/>
                     <zw:zCheckBox Content="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_DEBUG_MODE}" 
                                   IsChecked="{Binding HeyKodiConfig.DebugMode, Mode=TwoWay}"/>
+                    <zw:zCheckBox Content="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_USE_SPEECH_SYNTH}"
+                                  IsChecked="{Binding HeyKodiConfig.UseSpeechSynthesizer, Mode=TwoWay}"/>
                 </zw:zStackPanel>
                 <zw:zStackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
                     <zw:zStackPanel Orientation="Horizontal">
+                        <zw:zTextBlock Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_VOLUME}"/>
+                        <Slider Minimum="0" Maximum="1" Value="{Binding HeyKodiConfig.Volume, Mode=TwoWay}" Width="220" VerticalAlignment="Center" />
+                    </zw:zStackPanel>
+                    <zw:zStackPanel Orientation="Horizontal">
+                        <zw:zTextBlock Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_MEDIA_FETCH_DELAY}"/>
+                        <zw:zTextBox Text="{Binding HeyKodiConfig.MediaFetchDelay, Mode=TwoWay}"/>
+                        <zw:zTextBlock Text="s"/>
+                    </zw:zStackPanel>
+                    <zw:zStackPanel Orientation="Horizontal">
                         <zw:zTextBlock Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_LANGUAGE}"/>
-                        <zw:zComboBox SelectedValue="{Binding HeyKodiConfig.Language, Mode=TwoWay}" Width="150" VerticalAlignment="Center"
+                        <zw:zComboBox SelectedValue="{Binding HeyKodiConfig.Language, Mode=TwoWay}" Width="150" VerticalAlignment="Center" MaxWidth="180"
                                       ItemsSource="{Binding Source={x:Static model:HeyKodiConfig.SupportedLanguages}, Mode=OneTime}" 
                                       DisplayMemberPath="DisplayName" SelectedValuePath="Name" />
                     </zw:zStackPanel>
-                    <zw:zCheckBox Content="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_USE_SPEECH_SYNTH}"
-                                  IsChecked="{Binding HeyKodiConfig.UseSpeechSynthesizer, Mode=TwoWay}"/>
-                    <zw:zStackPanel Orientation="Horizontal">
-                        <zw:zTextBlock Text="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_VOLUME}"/>
-                        <Slider Minimum="0" Maximum="1" Value="{Binding HeyKodiConfig.Volume, Mode=TwoWay}" Width="150" VerticalAlignment="Center"/>
-                    </zw:zStackPanel>
                     <zw:zButton Content="{Binding HeyKodiConfig.Language, Mode=OneWay, Converter={x:Static tools:TranslationBindingConverter.Instance}, ConverterParameter=CONFIGVIEW_SHOW_DOCUMENTATION}" 
                                 Command="{Binding ShowDocumentationCommand, Mode=OneWay}" HorizontalAlignment="Left"/>
-				</zw:zStackPanel>
-			</zw:zGrid>
+                </zw:zStackPanel>
+            </zw:zGrid>
         </zw:zTabGroupBox>
     </zw:zStackPanel>
 </UserControl>

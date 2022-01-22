@@ -145,7 +145,7 @@
     <value>Kodi voice commands</value>
   </data>
   <data name="CONFIGVIEW_LANGUAGE" xml:space="preserve">
-    <value>Language of the interface</value>
+    <value>Interface language</value>
   </data>
   <data name="CONFIGVIEW_MINIMIZE_WHEN_PENDING" xml:space="preserve">
     <value>Minimize Hey Kodi when on hold</value>
@@ -410,5 +410,14 @@
   </data>
   <data name="MAINVIEW_CLOSE_CONFIRM_MESSAGE" xml:space="preserve">
     <value>Are you sure you want to quit Hey Kodi ?</value>
+  </data>
+  <data name="CONFIGVIEW_COMMAND_HIDE" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="CONFIGVIEW_COMMAND_PARAM_VALUES" xml:space="preserve">
+    <value>Parameter values</value>
+  </data>
+  <data name="CONFIGVIEW_MEDIA_FETCH_DELAY" xml:space="preserve">
+    <value>Media fetch pre-delay</value>
   </data>
 </root>

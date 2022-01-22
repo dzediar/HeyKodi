@@ -411,4 +411,13 @@
   <data name="MAINVIEW_CLOSE_CONFIRM_MESSAGE" xml:space="preserve">
     <value>Etes-vous certain de vouloir quitter Hey Kodi ?</value>
   </data>
+  <data name="CONFIGVIEW_COMMAND_HIDE" xml:space="preserve">
+    <value>Cacher</value>
+  </data>
+  <data name="CONFIGVIEW_COMMAND_PARAM_VALUES" xml:space="preserve">
+    <value>Valeurs du paramètre</value>
+  </data>
+  <data name="CONFIGVIEW_MEDIA_FETCH_DELAY" xml:space="preserve">
+    <value>Délai avant récupération des média</value>
+  </data>
 </root>

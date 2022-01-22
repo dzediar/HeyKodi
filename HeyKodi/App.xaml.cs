@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using zComp.Wpf;
 
 namespace HeyKodi
@@ -37,18 +38,18 @@ namespace HeyKodi
             {
                 // Run the application
 
-                if (e.Args != null && e.Args.Length == 2 && e.Args[0] == "-delay" && int.TryParse(e.Args[1], out var delay))
-                {
-                    if (delay >= 0)
-                    {
-                        if (delay >= 60)
-                        {
-                            delay = 60;
-                        }
-
-                        Thread.Sleep(delay * 1000);                        
-                    }
-                }
+                //if (e.Args != null && e.Args.Length == 2 && e.Args[0] == "-delay" && int.TryParse(e.Args[1], out var delay))
+                //{
+                //    if (delay >= 0)
+                //    {
+                //        if (delay >= 60)
+                //        {
+                //            delay = 60;
+                //        }
+                //
+                //        Thread.Sleep(delay * 1000);                        
+                //    }
+                //}
             }
             else
             {

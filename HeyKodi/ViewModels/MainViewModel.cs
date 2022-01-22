@@ -43,6 +43,8 @@ namespace HeyKodi.ViewModels
 
         private int minimizationDelay = 0;
 
+        private bool firstGrammarFetch = true;
+
         private List<string> grammar;
 
         private List<string> mediaGrammar;
@@ -139,7 +141,7 @@ namespace HeyKodi.ViewModels
                     CreateNoWindow = true,
                     ErrorDialog = true,
                     UseShellExecute = true,
-                    WindowStyle = ProcessWindowStyle.Normal
+                    WindowStyle = command.Hide ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal
                 };
 
                 Process.Start(psi);
@@ -328,7 +330,7 @@ namespace HeyKodi.ViewModels
                                     }
                                 }
 
-                                KodiService.SetVolume(new SetVolumeParams() { Volume = (int)volume });
+                                KodiService.SetVolume(new SetVolumeParams() { Volume = volume });
                             }
                             else
                             {
@@ -465,6 +467,16 @@ namespace HeyKodi.ViewModels
         {
             if (mediaGrammar == null && !string.IsNullOrWhiteSpace(heyKodiConfig.KodiApiHost))
             {
+                if (firstGrammarFetch)
+                {
+                    if (HeyKodiConfig.MediaFetchDelay > 0)
+                    {
+                        Thread.Sleep(HeyKodiConfig.MediaFetchDelay * 1000);
+                    }
+
+                    firstGrammarFetch = false;
+                }
+
                 ReadMediaGrammar();
             }
 
@@ -481,6 +493,12 @@ namespace HeyKodi.ViewModels
             {
                 grammar.Add($"{i} %");
             }
+
+            grammar.AddRange(HeyKodiConfig.ShellCommands
+                .Where(c => !string.IsNullOrWhiteSpace(c.CommandParameterValues))
+                .SelectMany(c => c.CommandParameterValues.Split(','))
+                .Where(p => !string.IsNullOrWhiteSpace(p))
+                .Select(p => p.Trim()));
 
             if (mediaGrammar != null)
             {

@@ -1,78 +1,12 @@
-﻿x Créer un moteur d'écoute de la reco vocale
-x Rendre ce moteur "robuste"
-x Rapatrier les éléments de KodiRPC dans HeyKodi
-x Intégrer la zcomp, utiliser dans la zcomp le nugget mvvm de microsoft
-x Implémenter le pattern MVVM
-x Lister les commandes kodi à gérer
-x Créer une classe de configuration à sérialiser / désérialiser
-x Créer la vue de la classe de config
-x Créer une vue principale sexy et animée
-x Mettre des icones à la place du bouton de fermeture, ajouter un bouton config
-x Revoir l'exécution des commandes et la gestion des états dans le recognizer
-x Afficher la commande reconnue
-x Transparence du bouton fermer de l'infobulle
-x Utiliser un message pour afficher la config
-x Mettre un timer lorsque codi est activé => désactivation
-x Ajouter une commande pour afficher la config de heykodi
-x Ajouter la commande pour annuler l'activation de codi
-x Réduire codi lorsque il repasse en attente
-x Utiliser des ICommand mvvm
-x Trouver une icone d'application
-non Gérer le tray icon
-x Config volume
-x Créer des classes commandes kodi avec un execute()
-x Gérer toutes les commandes listées
-x Mettre les sons en ressources
-x Créer un installer complet
-x Gérer la synthèse vocale pour les commandes à paramètres
-x Mettre les sources sous github
-x Créer une doc succinte dans le wiki
-x Faire en sorte que l'appli se lance au démarrage de windows
-x Tester toutes les commandes sur le mediacenter en utilisant l'installer
-x Vérifier le wrapptext dans l'infobulle pour les longs messages
-x Essayer d'ajouter la grammaire des titres de film car la reconnaissance vocale est nulle, récupérer les musiques et les séries tv, les auteurs aussi
-x Tester l'utilisation d'un mot de passe
-x Vérifier au lancement de heykodi si il est déjà lancé
-x Regarder les warnings
-x Gérer le souci de l'ouverture de heykodi avant kodi+
-x Créer une première release
-non Crypter le mdp kodi
-x Afficher l'exception uniquement lorsqu' le mode debug est activé, donner un maxwidth au content du speechballon, en permettant le wrapping du texte, trouver un rouge correct pour l'exceptionviewer
-x Créer un installer
-x Mettre une déco sur la fenêtre principale de launchmeup pour éviter le scaling windows
-x La réduction et l'activation ne se font plus en mode commande directe
-x Augmenter le nombre de média lus à 1000 et essayer d'éliminer les doublons
-x Vérifier les erreurs lors des exécutions de commandes
-x Ajouter les nouvelles commandes, commande avec comme paramètre un pourcentage (volume, ...)
-x Gérer la recherche youtube
-x Donner la possibilité de lancer des lignes de commandes (sélection de fichiers lancé via process.start())
-x Ajout / suppression de commandes d'applications
-x Shellcommands : permettre la saisie d'un paramètre vocal avec %%param%% dans les arguments
-x Localiser l'appli, donner le choix de la langue dans la config (en / fr)
-x Il y a un gros souci dans la consolidation des commandes
-x Compléter la doc et la traduire en anglais, modifier l'ouverture de doc
-x Tester tester tester... (sur le médiacenter)
-x Publier une release
-x Pb activation hey kodi qui déactive kodi
-x Traduire "divers" et "Etes-vous certain de vouloir quitter Hey Kodi ?"
-non Modifier la page https://kodi.wiki/view/Supplemental_tools
-x Récup des titres média : limiter le nb de retours, ne charger la suite que si on ne dépasse pas le nb max (1000)
-x ajouter un paramètre de ligne de commande pour lancer hey kodi avec un delay
+﻿x Désactiver le drag & drop dans la grille
+x Ajouter une grammaire utilisateur dans les commandes shell avec paramètres, avec des valeurs possibles pour le paramètre
+x Ajouter une case à cocher pour cacher l'app lancée par shellexecute
+x Ajout d'une config delay avant récup des média
 
 
-Désactiver le drag & drop dans la grille
-
-C'est très mal codé, nettoyer le code, tout mettre à sa place dans les bonnes couches
-Commandes d'applications : sélection de fichier non readonly, détecter les paramètres dans la ligne de commande, possibilité de remplacer %%parameter%% par le paramètre vocale (case à cocher paramétrable oui / non)
+Ne pas exécuter une commande si une commande n'est pas finie (créer un stade "executingcommand")
+Utiliser une palette de couleurs en rapport avec le thème de kodi mediacenter
 Choix des langues de reconnaissance et de synthèse vocale
+Cmde pour changer la langue du film ou bien les sous titres
 
 
-Commandes : 
-	suivant
-	précédent
-	volume (avec un paramètre)
-	select
-	éteindre
-	redémarrer
-
-	sous-titres => avec param
